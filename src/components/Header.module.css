@@ -1,0 +1,14 @@
+.header {
+  background-color: #020910;
+}
+
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  padding: 1rem 2rem;
+  color: white;
+  font-size: 2rem;
+}

@@ -1,0 +1,84 @@
+.task {
+  position: relative;
+  display: inline-block;
+  width: calc(90% - 0.5rem);
+  padding: 5% 5% 0 5%;
+  /* max-height: 200px; */
+  overflow: hidden;
+  border: 1px lightgrey solid;
+  border-left: 0.5rem solid lightgray;
+  border-radius: 10px;
+  background-color: white;
+  -webkit-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.task h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+}
+
+.task p {
+  font-size: 0.9rem;
+}
+
+.task ul {
+  list-style: none;
+  font-size: 0.75rem;
+  margin: 0 1rem;
+  padding: 0;
+}
+
+.task ul li {
+  position: relative;
+  margin-bottom: 0.35rem;
+}
+
+.task ul li.completed {
+  font-style: italic;
+}
+
+.task ul li .checkbox {
+  position: absolute;
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  left: -1rem;
+  top: 0.25rem;
+  border: 1px solid lightgray;
+  cursor: pointer;
+}
+
+.task ul li.completed .checkbox {
+  background-color: black;
+}
+
+.task ul li .checkbox:hover {
+  transform: scale(1.5);
+}
+
+.task.completed {
+  border-left: 0.5rem solid greenyellow;
+}
+
+.task.inprogress {
+  border-left: 0.5rem solid orange;
+}
+
+.task .footer {
+  width: 100%;
+  height: 1.5rem;
+  bottom: 0;
+  left: 0;
+  text-align: right;
+  background-color: white;
+}
+
+.task .footer p {
+  color: gray;
+  font-size: 0.75rem;
+  margin: 1rem 0 0;
+}

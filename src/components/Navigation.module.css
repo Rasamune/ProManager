@@ -1,0 +1,9 @@
+.navigation ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 1rem 2rem;
+}
+
+.navigation li {
+  font-size: 1.25rem;
+}
