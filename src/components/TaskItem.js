@@ -4,11 +4,9 @@ import classes from './TaskItem.module.css';
 const TaskItem = props => {
   const navigate = useNavigate();
   const checklistClickHandler = e => {
-    props.onChecklistClick(
-      props.task,
-      e.target.dataset.id,
-      e.target.dataset.checked
-    );
+    let checked;
+    e.target.dataset.checked === 'true' ? (checked = false) : (checked = true);
+    props.onChecklistClick(props.task, e.target.dataset.id, checked);
   };
   const taskClickHandler = e => {
     if (e.target.classList.contains('listItem')) return;

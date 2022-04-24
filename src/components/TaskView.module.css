@@ -110,6 +110,11 @@
   width: 75%;
 }
 
+.task input.addingitem {
+  font-size: 1.05rem;
+  width: 100%;
+}
+
 .task textarea.details {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -121,6 +126,15 @@
   resize: vertical;
 }
 
+.task .checklist .addtask {
+  display: inline-block;
+  color: gray;
+  border: 1px solid lightgray;
+  padding: 0.15rem 1rem 0.25rem 0.5rem;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
 .checklist {
   border-bottom: 1px solid lightgray;
 }
@@ -128,7 +142,7 @@
 .checklist ul {
   list-style: none;
   font-size: 1rem;
-  margin: 1.5rem 1.75rem 2rem;
+  margin: 1.5rem 1.75rem 1rem;
   padding: 0;
 }
 
@@ -160,15 +174,22 @@
   transform: scale(1.5);
 }
 
-.tags p {
-  display: inline-block;
-  margin: 0 0 0 1rem;
-  font-size: 0.75rem;
-  border: 1px solid lightgray;
-  color: gray;
-  border-radius: 15px;
-  padding: 0.1rem 0.75rem 0.25rem;
+.checklist li .remove {
+  display: none;
+  font-style: normal;
+  font-weight: bold;
+  color: red;
+  margin-left: 0.5rem;
   cursor: pointer;
+}
+
+.checklist .itemwarning {
+  color: gray;
+  font-style: italic;
+}
+
+.checklist li:hover > .remove {
+  display: initial;
 }
 
 .tags ul {
@@ -183,6 +204,24 @@
   display: inline-block;
   padding: 0.25rem;
   font-size: 0.9rem;
+  color: gray;
+}
+
+.tags li.addtag {
+  display: inline-block;
+  margin: 0 0 0 0.5rem;
+  font-size: 0.75rem;
+  border: 1px solid lightgray;
+  color: gray;
+  border-radius: 15px;
+  padding: 0.1rem 0.75rem 0.25rem;
+  cursor: pointer;
+}
+
+.task input.addingtag {
+  margin-top: 0.5rem;
+  font-size: 1.05rem;
+  width: 100%;
 }
 
 .comments-container h1 {

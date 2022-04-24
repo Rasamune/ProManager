@@ -278,9 +278,7 @@ const ProjectView = () => {
         item => item.id === itemId
       );
 
-      itemChecked === 'true'
-        ? (tasks[taskIndex].checklist[itemIndex].completed = false)
-        : (tasks[taskIndex].checklist[itemIndex].completed = true);
+      tasks[taskIndex].checklist[itemIndex].completed = itemChecked;
 
       // Set Task Status
       let taskState = {
