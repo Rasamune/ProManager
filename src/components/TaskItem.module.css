@@ -75,10 +75,35 @@
   left: 0;
   text-align: right;
   background-color: white;
+  margin: 1rem 0 0.15rem;
 }
 
 .task .footer p {
   color: gray;
   font-size: 0.75rem;
-  margin: 1rem 0 0;
+  margin: 0;
+  padding-top: 0.15rem;
+}
+
+.task .footer .priority p {
+  padding: 0.05rem 0.25rem 0.15rem;
+  float: left;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+  font-size: 0.65rem;
+}
+
+.task .footer .priority.low p {
+  border: 1px solid lightgray;
+  color: lightgray;
+}
+
+.task .footer .priority.medium p {
+  border: 1px solid orange;
+  color: orange;
+}
+
+.task .footer .priority.high p {
+  border: 1px solid orangered;
+  color: orangered;
 }

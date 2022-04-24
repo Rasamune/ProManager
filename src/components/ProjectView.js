@@ -29,6 +29,7 @@ const DUMMY_PROJECT = [
         status: 'completed',
         tags: ['logo', 'title', 'important'],
         createdBy: 'Rasamune',
+        lastUpdatedBy: 'Rasamune',
       },
       {
         id: 'card2',
@@ -89,10 +90,11 @@ const DUMMY_PROJECT = [
         dateUpdated: new Date(),
         dueDate: new Date(),
         progress: 0,
-        priority: 'high',
+        priority: 'medium',
         status: 'inprogress',
         tags: ['logo', 'title', 'important'],
         createdBy: 'Rasamune',
+        lastUpdatedBy: 'Rasamune',
       },
       {
         id: 'card3',
@@ -109,10 +111,11 @@ const DUMMY_PROJECT = [
         dateUpdated: new Date(),
         dueDate: new Date(),
         progress: 0,
-        priority: 'high',
+        priority: 'low',
         status: 'completed',
         tags: ['logo', 'title', 'important'],
         createdBy: 'Rasamune',
+        lastUpdatedBy: 'Rasamune',
       },
       {
         id: 'card4',
@@ -129,10 +132,11 @@ const DUMMY_PROJECT = [
         dateUpdated: new Date(),
         dueDate: new Date(),
         progress: 0,
-        priority: 'high',
+        priority: 'low',
         status: 'new',
         tags: ['logo', 'title', 'important'],
         createdBy: 'Rasamune',
+        lastUpdatedBy: 'Rasamune',
       },
       {
         id: 'card5',
@@ -159,10 +163,11 @@ const DUMMY_PROJECT = [
         dateUpdated: new Date(),
         dueDate: new Date(),
         progress: 0,
-        priority: 'high',
+        priority: 'low',
         status: 'new',
         tags: ['logo', 'title', 'important'],
         createdBy: 'Rasamune',
+        lastUpdatedBy: 'Rasamune',
       },
       {
         id: 'card6',
@@ -189,10 +194,11 @@ const DUMMY_PROJECT = [
         dateUpdated: new Date(),
         dueDate: new Date(),
         progress: 0,
-        priority: 'high',
+        priority: 'low',
         status: 'new',
         tags: ['logo', 'title', 'important'],
         createdBy: 'Rasamune',
+        lastUpdatedBy: 'Rasamune',
       },
       {
         id: 'card7',
@@ -219,10 +225,11 @@ const DUMMY_PROJECT = [
         dateUpdated: new Date(),
         dueDate: new Date(),
         progress: 0,
-        priority: 'high',
+        priority: 'low',
         status: 'new',
         tags: ['logo', 'title', 'important'],
         createdBy: 'Rasamune',
+        lastUpdatedBy: 'Rasamune',
       },
       {
         id: 'card8',
@@ -249,10 +256,11 @@ const DUMMY_PROJECT = [
         dateUpdated: new Date(),
         dueDate: new Date(),
         progress: 0,
-        priority: 'high',
+        priority: 'low',
         status: 'new',
         tags: ['logo', 'title', 'important'],
         createdBy: 'Rasamune',
+        lastUpdatedBy: 'Rasamune',
       },
     ],
   },
@@ -295,6 +303,14 @@ const ProjectView = () => {
     [projectTasks]
   );
 
+  const updateTaskHandler = incomingTask => {
+    const tasks = [...projectTasks];
+    const taskIndex = tasks.findIndex(task => incomingTask.id === task.id);
+    tasks[taskIndex] = incomingTask;
+
+    setProjectTasks(tasks);
+  };
+
   return (
     <section>
       <div className={classes.head}>
@@ -317,6 +333,7 @@ const ProjectView = () => {
             <TaskView
               tasks={projectTasks}
               onChecklistHandler={checklistClickHandler}
+              onUpdateTask={updateTaskHandler}
             />
           }
         />

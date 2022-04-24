@@ -8,6 +8,10 @@
   cursor: pointer;
 }
 
+.hide {
+  display: none;
+}
+
 .task {
   position: relative;
   margin: 0 2rem 2rem;
@@ -57,6 +61,64 @@
   text-align: right;
   font-size: 1.5rem;
   color: orange;
+}
+
+.task .footer {
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  text-align: right;
+  margin: 0.75rem 0 0;
+  background-color: white;
+}
+
+.task .footer p {
+  margin: 0;
+  padding-top: 0.25rem;
+  color: gray;
+  font-size: 0.75rem;
+}
+
+.task .priority {
+  float: left;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem 0.25rem;
+  border-radius: 10px;
+}
+
+.task .priority.low {
+  border: 1px solid lightgray;
+  color: lightgray;
+}
+
+.task .priority.medium {
+  border: 1px solid orange;
+  color: orange;
+}
+
+.task .priority.high {
+  border: 1px solid orangered;
+  color: orangered;
+}
+
+.task input.title {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-weight: bold;
+  font-size: 1.17rem;
+  width: 75%;
+}
+
+.task textarea.details {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-size: 1.05rem;
+  width: 100%;
+  min-height: 6rem;
+  margin-top: 1rem;
+  resize: vertical;
 }
 
 .checklist {
@@ -121,21 +183,6 @@
   display: inline-block;
   padding: 0.25rem;
   font-size: 0.9rem;
-}
-
-.task .footer {
-  width: 100%;
-  height: 1.5rem;
-  bottom: 0;
-  left: 0;
-  text-align: right;
-  background-color: white;
-}
-
-.task .footer p {
-  color: gray;
-  font-size: 0.75rem;
-  margin: 1rem 0 0;
 }
 
 .comments-container h1 {

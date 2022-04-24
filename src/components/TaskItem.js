@@ -42,6 +42,9 @@ const TaskItem = props => {
         </ul>
       </div>
       <div className={classes.footer}>
+        <div className={`${classes.priority} ${classes[props.task.priority]}`}>
+          <p>{props.task.priority}</p>
+        </div>
         <p>9 minutes ago</p>
       </div>
     </div>
