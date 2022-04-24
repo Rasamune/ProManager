@@ -27,9 +27,17 @@ const TaskView = props => {
   });
 
   const checklistClickHandler = e => {
+    const updatedTask = { ...task };
+    const itemIndex = updatedTask.checklist.findIndex(
+      item => item.id === e.target.dataset.id
+    );
+
     let checked;
     e.target.dataset.checked === 'true' ? (checked = false) : (checked = true);
-    props.onChecklistHandler(task, e.target.dataset.id, checked);
+
+    updatedTask.checklist[itemIndex].completed = checked;
+
+    props.onChecklistHandler(updatedTask);
   };
 
   const backClickHandler = e => {

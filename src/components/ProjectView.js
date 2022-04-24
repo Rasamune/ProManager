@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import TaskList from './TaskList';
 import TaskView from './TaskView';
@@ -269,42 +269,32 @@ const DUMMY_PROJECT = [
 const ProjectView = () => {
   const [projectTasks, setProjectTasks] = useState(DUMMY_PROJECT[0].tasks);
 
-  const checklistClickHandler = useCallback(
-    (incomingTask, itemId, itemChecked) => {
-      // Update Item on Checklist
-      const tasks = [...projectTasks];
-      const taskIndex = tasks.findIndex(task => incomingTask.id === task.id);
-      const itemIndex = tasks[taskIndex].checklist.findIndex(
-        item => item.id === itemId
-      );
-
-      tasks[taskIndex].checklist[itemIndex].completed = itemChecked;
-
-      // Set Task Status
-      let taskState = {
-        status: 'completed',
-        count: 0,
-      };
-      tasks[taskIndex].checklist.forEach(item => {
-        if (item.completed === false) {
-          taskState.status = 'inprogress';
-          taskState.count++;
-        }
-      });
-      if (taskState.count === tasks[taskIndex].checklist.length) {
-        taskState.status = 'new';
+  const updateTaskProgress = task => {
+    // Set Task Status
+    let taskState = {
+      status: 'completed',
+      count: 0,
+    };
+    task.checklist.forEach(item => {
+      if (item.completed === false) {
+        taskState.status = 'inprogress';
+        taskState.count++;
       }
-      tasks[taskIndex].status = taskState.status;
+    });
+    if (taskState.count === task.checklist.length) {
+      taskState.status = 'new';
+    }
+    task.status = taskState.status;
 
-      setProjectTasks(tasks);
-    },
-    [projectTasks]
-  );
+    return task;
+  };
 
   const updateTaskHandler = incomingTask => {
     const tasks = [...projectTasks];
     const taskIndex = tasks.findIndex(task => incomingTask.id === task.id);
-    tasks[taskIndex] = incomingTask;
+
+    const updatedTask = updateTaskProgress(incomingTask);
+    tasks[taskIndex] = updatedTask;
 
     setProjectTasks(tasks);
   };
@@ -321,7 +311,7 @@ const ProjectView = () => {
           element={
             <TaskList
               tasks={projectTasks}
-              onChecklistHandler={checklistClickHandler}
+              onChecklistHandler={updateTaskHandler}
             />
           }
         />
@@ -330,7 +320,7 @@ const ProjectView = () => {
           element={
             <TaskView
               tasks={projectTasks}
-              onChecklistHandler={checklistClickHandler}
+              onChecklistHandler={updateTaskHandler}
               onUpdateTask={updateTaskHandler}
             />
           }

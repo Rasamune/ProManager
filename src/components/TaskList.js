@@ -11,8 +11,8 @@ const TaskList = props => {
   });
 
   const checklistClickHandler = useCallback(
-    (incomingTask, itemId, itemChecked) => {
-      props.onChecklistHandler(incomingTask, itemId, itemChecked);
+    task => {
+      props.onChecklistHandler(task);
     },
     [props]
   );
