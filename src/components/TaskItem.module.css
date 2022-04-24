@@ -61,7 +61,7 @@
 }
 
 .task.completed {
-  border-left: 0.5rem solid greenyellow;
+  border-left: 0.5rem solid yellowgreen;
 }
 
 .task.inprogress {

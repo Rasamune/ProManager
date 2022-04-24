@@ -1,5 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
-import TaskItem from './TaskItem';
+import { useState, useCallback } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import TaskList from './TaskList';
+import TaskView from './TaskView';
+import ProjectProgress from './ProjectProgress';
 import classes from './ProjectView.module.css';
 
 const DUMMY_PROJECT = [
@@ -47,6 +50,39 @@ const DUMMY_PROJECT = [
             id: 'check3',
             title: 'Get approval',
             completed: false,
+          },
+        ],
+        comments: [
+          {
+            id: 'comment1',
+            createdBy: 'Rasamune',
+            datePosted: new Date(),
+            comment:
+              "I think we need to adjust some of the details on this task because it won't mee dedline",
+          },
+          {
+            id: 'comment2',
+            createdBy: 'Catherine',
+            datePosted: new Date(),
+            comment: 'You are totally right',
+          },
+          {
+            id: 'comment3',
+            createdBy: 'Catherine',
+            datePosted: new Date(),
+            comment: 'You are totally right',
+          },
+          {
+            id: 'comment4',
+            createdBy: 'Catherine',
+            datePosted: new Date(),
+            comment: 'You are totally right',
+          },
+          {
+            id: 'comment5',
+            createdBy: 'Catherine',
+            datePosted: new Date(),
+            comment: 'You are totally right',
           },
         ],
         dateCreated: new Date(),
@@ -224,11 +260,6 @@ const DUMMY_PROJECT = [
 
 const ProjectView = () => {
   const [projectTasks, setProjectTasks] = useState(DUMMY_PROJECT[0].tasks);
-  const [projectTasksColumns, setProjectTasksColumns] = useState({
-    taskFirstColumn: [],
-    taskSecondColumn: [],
-    taskThirdColumn: [],
-  });
 
   const checklistClickHandler = useCallback(
     (incomingTask, itemId, itemChecked) => {
@@ -264,67 +295,32 @@ const ProjectView = () => {
     [projectTasks]
   );
 
-  useEffect(() => {
-    let taskFirstColumn = [];
-    let taskSecondColumn = [];
-    let taskThirdColumn = [];
-
-    projectTasks.forEach((task, index) => {
-      if ((index + 1) % 3 === 0) {
-        // Populate 3rd Column
-        taskThirdColumn.push(
-          <TaskItem
-            key={task.id}
-            task={task}
-            onChecklistClick={checklistClickHandler}
-          />
-        );
-        return;
-      }
-      if ((index + 1) % 3 === 2) {
-        // Populate 2nd Column
-        taskSecondColumn.push(
-          <TaskItem
-            key={task.id}
-            task={task}
-            onChecklistClick={checklistClickHandler}
-          />
-        );
-        return;
-      }
-      // Populate 1st Column
-      taskFirstColumn.push(
-        <TaskItem
-          key={task.id}
-          task={task}
-          onChecklistClick={checklistClickHandler}
-        />
-      );
-    });
-
-    setProjectTasksColumns({
-      taskFirstColumn,
-      taskSecondColumn,
-      taskThirdColumn,
-    });
-  }, [checklistClickHandler, projectTasks]);
-
   return (
     <section>
       <div className={classes.head}>
         <h1>{DUMMY_PROJECT[0].title}</h1>
+        <ProjectProgress tasks={projectTasks} />
       </div>
-      <div className={classes['tasks-container']}>
-        <div className={classes.column}>
-          {projectTasksColumns.taskFirstColumn}
-        </div>
-        <div className={classes.column}>
-          {projectTasksColumns.taskSecondColumn}
-        </div>
-        <div className={classes.column}>
-          {projectTasksColumns.taskThirdColumn}
-        </div>
-      </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <TaskList
+              tasks={projectTasks}
+              onChecklistHandler={checklistClickHandler}
+            />
+          }
+        />
+        <Route
+          path="/:taskId"
+          element={
+            <TaskView
+              tasks={projectTasks}
+              onChecklistHandler={checklistClickHandler}
+            />
+          }
+        />
+      </Routes>
     </section>
   );
 };

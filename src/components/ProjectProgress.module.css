@@ -1,0 +1,21 @@
+.progress-container ul {
+  display: grid;
+  gap: 0.15rem;
+  list-style-type: none;
+  padding: 0;
+}
+
+.progress-container ul li {
+  display: inline-block;
+  height: 0.75rem;
+  border-radius: 2px;
+  background-color: white;
+}
+
+.progress-container ul li.completed {
+  background-color: yellowgreen;
+}
+
+.progress-container ul li.inprogress {
+  background-color: orange;
+}

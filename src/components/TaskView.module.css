@@ -1,0 +1,193 @@
+.task-view {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.task-container > h1 {
+  margin: 1rem 2rem;
+  cursor: pointer;
+}
+
+.task {
+  position: relative;
+  margin: 0 2rem 2rem;
+  padding: 2rem 2rem 1rem;
+  border: 1px lightgrey solid;
+  border-top: 0.5rem solid lightgray;
+  border-radius: 10px;
+  background-color: white;
+  -webkit-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
+}
+
+.task h1 {
+  margin: 0;
+  width: 75%;
+}
+
+.task .createdby {
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.task.completed {
+  border-top: 0.5rem solid yellowgreen;
+}
+
+.task.completed:after {
+  position: absolute;
+  content: 'COMPLETED';
+  right: 1rem;
+  top: -0.45rem;
+  text-align: right;
+  font-size: 1.5rem;
+  color: yellowgreen;
+}
+
+.task.inprogress {
+  border-top: 0.5rem solid orange;
+}
+
+.task.inprogress:after {
+  position: absolute;
+  content: 'IN PROGRESS';
+  right: 1rem;
+  top: -0.45rem;
+  text-align: right;
+  font-size: 1.5rem;
+  color: orange;
+}
+
+.checklist {
+  border-bottom: 1px solid lightgray;
+}
+
+.checklist ul {
+  list-style: none;
+  font-size: 1rem;
+  margin: 1.5rem 1.75rem 2rem;
+  padding: 0;
+}
+
+.checklist ul li {
+  position: relative;
+  margin-bottom: 0.35rem;
+}
+
+.checklist ul li.completed {
+  font-style: italic;
+}
+
+.checklist ul li .checkbox {
+  position: absolute;
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  left: -1.75rem;
+  top: 0.15rem;
+  border: 1px solid lightgray;
+  cursor: pointer;
+}
+
+.checklist ul li.completed .checkbox {
+  background-color: black;
+}
+
+.checklist ul li .checkbox:hover {
+  transform: scale(1.5);
+}
+
+.tags p {
+  display: inline-block;
+  margin: 0 0 0 1rem;
+  font-size: 0.75rem;
+  border: 1px solid lightgray;
+  color: gray;
+  border-radius: 15px;
+  padding: 0.1rem 0.75rem 0.25rem;
+  cursor: pointer;
+}
+
+.tags ul {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tags ul li {
+  font-style: italic;
+  display: inline-block;
+  padding: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.task .footer {
+  width: 100%;
+  height: 1.5rem;
+  bottom: 0;
+  left: 0;
+  text-align: right;
+  background-color: white;
+}
+
+.task .footer p {
+  color: gray;
+  font-size: 0.75rem;
+  margin: 1rem 0 0;
+}
+
+.comments-container h1 {
+  margin: 1rem 0;
+}
+
+.comments-container .addcomment {
+  background-color: #fffacd;
+  margin: 0 2rem 0 0;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.comments-container .addcomment p {
+  padding: 0.75rem;
+}
+
+.comments ul {
+  list-style-type: none;
+  margin: 0.25rem 2rem 2rem 0;
+  padding: 0;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.comments ul li {
+  border-bottom: 1px solid lightgray;
+}
+
+.comments ul li:last-child {
+  border-bottom: none;
+}
+
+.comments .comment {
+  background-color: white;
+  padding: 0.25rem 1rem 1.5rem;
+}
+
+.comments .comment p {
+  padding: 0;
+  margin: 0;
+}
+
+.comments .info .time {
+  float: right;
+  font-size: 0.75rem;
+}
+
+.comments .info p {
+  margin: 1rem 1rem 0.25rem;
+  font-size: 0.75rem;
+  display: inline-block;
+}

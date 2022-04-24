@@ -1,0 +1,6 @@
+.tasks-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.25rem;
+  margin: 1rem 2rem 2rem;
+}

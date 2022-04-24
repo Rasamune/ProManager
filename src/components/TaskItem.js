@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import classes from './TaskItem.module.css';
 
 const TaskItem = props => {
+  const navigate = useNavigate();
   const checklistClickHandler = e => {
     props.onChecklistClick(
       props.task,
@@ -10,6 +12,7 @@ const TaskItem = props => {
   };
   const taskClickHandler = e => {
     if (e.target.classList.contains('listItem')) return;
+    navigate(`/${props.task.id}`);
   };
   return (
     <div
