@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import TaskList from './TaskList';
 import TaskView from './TaskView';
 import ProjectProgress from './ProjectProgress';
@@ -266,8 +266,17 @@ const DUMMY_PROJECT = [
   },
 ];
 
+const getLocalStorage = () => {
+  const savedTasks = window.localStorage.getItem('tasks');
+  if (savedTasks) {
+    return JSON.parse(savedTasks);
+  }
+  return DUMMY_PROJECT[0].tasks;
+};
+
 const ProjectView = () => {
-  const [projectTasks, setProjectTasks] = useState(DUMMY_PROJECT[0].tasks);
+  const [projectTasks, setProjectTasks] = useState(getLocalStorage());
+  const navigate = useNavigate();
 
   const updateTaskProgress = task => {
     // Set Task Status
@@ -289,30 +298,70 @@ const ProjectView = () => {
     return task;
   };
 
+  const addNewTaskHandler = () => {
+    const tasks = [...projectTasks];
+    const newId = `task${Date.now()}`;
+    const newTask = {
+      id: newId,
+      title: 'Click here to name the task',
+      details: 'Click here to give the task a description',
+      checklist: [],
+      dateCreated: new Date(),
+      dateUpdated: new Date(),
+      dueDate: new Date(),
+      progress: 0,
+      priority: 'low',
+      status: 'new',
+      tags: [],
+      createdBy: 'Rasamune',
+      lastUpdatedBy: 'Rasamune',
+    };
+    tasks.push(newTask);
+
+    updateLocalStorage(tasks);
+    setProjectTasks(tasks);
+    navigate(`/${newId}`);
+  };
+
   const updateTaskHandler = incomingTask => {
     const tasks = [...projectTasks];
     const taskIndex = tasks.findIndex(task => incomingTask.id === task.id);
 
     const updatedTask = updateTaskProgress(incomingTask);
+    updatedTask.dateUpdated = new Date();
     tasks[taskIndex] = updatedTask;
 
+    updateLocalStorage(tasks);
     setProjectTasks(tasks);
+  };
+
+  const deleteTaskHandler = incomingTask => {
+    const tasks = [...projectTasks];
+    const taskIndex = tasks.findIndex(task => incomingTask.id === task.id);
+    tasks.splice(taskIndex, 1);
+
+    updateLocalStorage(tasks);
+    setProjectTasks(tasks);
+  };
+
+  const updateLocalStorage = tasksToSave => {
+    window.localStorage.setItem('tasks', JSON.stringify(tasksToSave));
   };
 
   return (
     <section>
       <div className={classes.head}>
         <h1>{DUMMY_PROJECT[0].title}</h1>
+        <button className={classes['new-task']} onClick={addNewTaskHandler}>
+          + New Task
+        </button>
         <ProjectProgress tasks={projectTasks} />
       </div>
       <Routes>
         <Route
           path="/"
           element={
-            <TaskList
-              tasks={projectTasks}
-              onChecklistHandler={updateTaskHandler}
-            />
+            <TaskList tasks={projectTasks} onUpdateTask={updateTaskHandler} />
           }
         />
         <Route
@@ -320,8 +369,8 @@ const ProjectView = () => {
           element={
             <TaskView
               tasks={projectTasks}
-              onChecklistHandler={updateTaskHandler}
               onUpdateTask={updateTaskHandler}
+              onDeleteTask={deleteTaskHandler}
             />
           }
         />

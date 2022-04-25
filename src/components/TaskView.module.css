@@ -6,6 +6,36 @@
 .task-container > h1 {
   margin: 1rem 2rem;
   cursor: pointer;
+  display: inline-block;
+}
+
+.task-container .delete-task {
+  font-size: 1em;
+  float: right;
+  margin: 1.15rem 3rem 0;
+  cursor: pointer;
+}
+
+.task-container .confirmdelete {
+  font-size: 1em;
+  float: right;
+  margin: 1.15rem 3rem 0;
+}
+
+.task-container .confirmdelete div {
+  display: inline-block;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.task-container .confirmdelete .confirm {
+  font-weight: bold;
+  color: yellowgreen;
+}
+
+.task-container .confirmdelete .cancel {
+  font-weight: bold;
+  color: orangered;
 }
 
 .hide {
@@ -27,7 +57,39 @@
 
 .task h1 {
   margin: 0;
-  width: 75%;
+  width: 70%;
+  display: inline-block;
+}
+
+.task h1:hover {
+  outline: 1px solid lightgray;
+  cursor: text;
+}
+
+.task .details:hover {
+  outline: 1px solid lightgray;
+  cursor: text;
+}
+
+.task .duedate {
+  position: relative;
+  font-size: 0.9rem;
+  float: right;
+  cursor: pointer;
+}
+
+.task .duedate:hover {
+  outline: 1px solid lightgray;
+}
+
+.task .duedate .title {
+  position: absolute;
+  bottom: -0.75rem;
+  right: 0;
+  font-weight: bold;
+  font-size: 0.75rem;
+  text-align: right;
+  color: gray;
 }
 
 .task .createdby {
@@ -79,26 +141,70 @@
   font-size: 0.75rem;
 }
 
-.task .priority {
+.task .priority-container {
+  position: relative;
   float: left;
+}
+
+.task .priority {
   font-size: 0.75rem;
   padding: 0.15rem 0.5rem 0.25rem;
   border-radius: 10px;
+  cursor: pointer;
 }
 
-.task .priority.low {
+.task .priority-container .low {
   border: 1px solid lightgray;
   color: lightgray;
 }
 
-.task .priority.medium {
+.task .priority-container .medium {
   border: 1px solid orange;
   color: orange;
 }
 
-.task .priority.high {
+.task .priority-container .high {
   border: 1px solid orangered;
   color: orangered;
+}
+
+.priority-container .priority-dropdown {
+  /* position: absolute; */
+  left: 0;
+  top: 0;
+  background-color: white;
+  padding: 0;
+}
+
+.priority-container .priority-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.priority-container .priority-dropdown ul li {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem 0.25rem;
+  border-radius: 10px;
+  margin-right: 0.15rem;
+  cursor: pointer;
+}
+
+.priority-container .priority-dropdown ul li.low:hover {
+  background-color: gray;
+  color: white;
+}
+
+.priority-container .priority-dropdown ul li.medium:hover {
+  background-color: orange;
+  color: white;
+}
+
+.priority-container .priority-dropdown ul li.high:hover {
+  background-color: orangered;
+  color: white;
 }
 
 .task input.title {
@@ -188,7 +294,7 @@
   font-style: italic;
 }
 
-.checklist li:hover > .remove {
+.checklist li:hover .remove {
   display: initial;
 }
 
@@ -209,7 +315,7 @@
 
 .tags li.addtag {
   display: inline-block;
-  margin: 0 0 0 0.5rem;
+  margin: 0;
   font-size: 0.75rem;
   border: 1px solid lightgray;
   color: gray;
@@ -276,4 +382,10 @@
   margin: 1rem 1rem 0.25rem;
   font-size: 0.75rem;
   display: inline-block;
+}
+
+@media (max-width: 30em) {
+  .task-view {
+    grid-template-columns: 1fr;
+  }
 }

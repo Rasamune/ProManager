@@ -1,8 +1,11 @@
 import { useNavigate } from 'react-router-dom';
+import { useTimestamp } from '../hooks/use-timestamp';
 import classes from './TaskItem.module.css';
 
 const TaskItem = props => {
   const navigate = useNavigate();
+  const timeStamp = useTimestamp(props.task.dateUpdated);
+
   const checklistClickHandler = e => {
     const task = { ...props.task };
     const itemIndex = task.checklist.findIndex(
@@ -51,7 +54,7 @@ const TaskItem = props => {
         <div className={`${classes.priority} ${classes[props.task.priority]}`}>
           <p>{props.task.priority}</p>
         </div>
-        <p>9 minutes ago</p>
+        <p>{timeStamp}</p>
       </div>
     </div>
   );

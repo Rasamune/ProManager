@@ -9,20 +9,42 @@ const TaskList = props => {
     taskSecondColumn: [],
     taskThirdColumn: [],
   });
+  const isMobileView = window.innerWidth < 768;
 
   const checklistClickHandler = useCallback(
     task => {
-      props.onChecklistHandler(task);
+      props.onUpdateTask(task);
     },
     [props]
   );
 
   useEffect(() => {
+    const tasks = [...projectTasks];
     let taskFirstColumn = [];
     let taskSecondColumn = [];
     let taskThirdColumn = [];
 
-    projectTasks.forEach((task, index) => {
+    tasks.reverse();
+
+    if (isMobileView) {
+      tasks.forEach((task, index) => {
+        taskFirstColumn.push(
+          <TaskItem
+            key={task.id}
+            task={task}
+            onChecklistClick={checklistClickHandler}
+          />
+        );
+      });
+
+      setProjectTasksColumns({
+        taskFirstColumn,
+      });
+
+      return;
+    }
+
+    tasks.forEach((task, index) => {
       if ((index + 1) % 3 === 0) {
         // Populate 3rd Column
         taskThirdColumn.push(
@@ -54,13 +76,12 @@ const TaskList = props => {
         />
       );
     });
-
     setProjectTasksColumns({
       taskFirstColumn,
       taskSecondColumn,
       taskThirdColumn,
     });
-  }, [checklistClickHandler, projectTasks]);
+  }, [checklistClickHandler, projectTasks, isMobileView]);
 
   return (
     <div className={classes['tasks-container']}>
