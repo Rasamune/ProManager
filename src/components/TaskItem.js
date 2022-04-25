@@ -5,6 +5,7 @@ import classes from './TaskItem.module.css';
 const TaskItem = props => {
   const navigate = useNavigate();
   const timeStamp = useTimestamp(props.task.dateUpdated);
+  const view = props.view;
 
   const checklistClickHandler = e => {
     const task = { ...props.task };
@@ -15,10 +16,32 @@ const TaskItem = props => {
     let checked;
     e.target.dataset.checked === 'true' ? (checked = false) : (checked = true);
 
-    task.checklist[itemIndex].completed = checked;
+    let changelogEntry;
+    if (checked) {
+      changelogEntry = {
+        type: 'itemCompleted',
+        details: task.checklist[itemIndex].title,
+        date: new Date(),
+        changeBy: 'Rasamune',
+      };
+    } else {
+      changelogEntry = {
+        type: 'itemUnchecked',
+        details: task.checklist[itemIndex].title,
+        date: new Date(),
+        changeBy: 'Rasamune',
+      };
+    }
 
-    props.onChecklistClick(task);
+    const updatedTask = {
+      ...task,
+      changelog: [changelogEntry, ...task.changelog],
+    };
+    updatedTask.checklist[itemIndex].completed = checked;
+
+    props.onChecklistClick(updatedTask);
   };
+
   const taskClickHandler = e => {
     if (e.target.classList.contains('listItem')) return;
     navigate(`/${props.task.id}`);
@@ -32,24 +55,28 @@ const TaskItem = props => {
     >
       <h1>{props.task.title}</h1>
       <p>{props.task.details}</p>
-      <div>
-        <ul>
-          {props.task.checklist.map(item => (
-            <li
-              key={item.id}
-              className={item.completed ? classes.completed : ''}
-            >
-              <span
-                data-id={item.id}
-                data-checked={item.completed}
-                className={`${classes.checkbox} listItem`}
-                onClick={checklistClickHandler}
-              ></span>
-              {item.title}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {view === 'expand' && (
+        <>
+          <div>
+            <ul>
+              {props.task.checklist.map(item => (
+                <li
+                  key={item.id}
+                  className={item.completed ? classes.completed : ''}
+                >
+                  <span
+                    data-id={item.id}
+                    data-checked={item.completed}
+                    className={`${classes.checkbox} listItem`}
+                    onClick={checklistClickHandler}
+                  ></span>
+                  {item.title}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      )}
       <div className={classes.footer}>
         <div className={`${classes.priority} ${classes[props.task.priority]}`}>
           <p>{props.task.priority}</p>

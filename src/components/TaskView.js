@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTimestamp, useDateFormat } from '../hooks/use-timestamp';
-
+import CommentsView from './CommentsView';
+import ChangelogView from './ChangelogView';
 import classes from './TaskView.module.css';
 
 const TaskView = props => {
@@ -12,6 +13,7 @@ const TaskView = props => {
   const timeStamp = useTimestamp(task.dateUpdated);
   const dueDate = useDateFormat(task.dueDate);
   const createdDate = useDateFormat(task.dateCreated);
+  const isMobileView = window.innerWidth < 768;
 
   const [editFields, setEditFields] = useState({
     title: {
@@ -49,14 +51,34 @@ const TaskView = props => {
   };
 
   const checklistClickHandler = e => {
-    const updatedTask = { ...task };
-    const itemIndex = updatedTask.checklist.findIndex(
+    const itemIndex = task.checklist.findIndex(
       item => item.id === e.target.dataset.id
     );
 
     let checked;
     e.target.dataset.checked === 'true' ? (checked = false) : (checked = true);
 
+    let changelogEntry;
+    if (checked) {
+      changelogEntry = {
+        type: 'itemCompleted',
+        details: task.checklist[itemIndex].title,
+        date: new Date(),
+        changeBy: 'Rasamune',
+      };
+    } else {
+      changelogEntry = {
+        type: 'itemUnchecked',
+        details: task.checklist[itemIndex].title,
+        date: new Date(),
+        changeBy: 'Rasamune',
+      };
+    }
+
+    const updatedTask = {
+      ...task,
+      changelog: [changelogEntry, ...task.changelog],
+    };
     updatedTask.checklist[itemIndex].completed = checked;
 
     props.onUpdateTask(updatedTask);
@@ -92,12 +114,25 @@ const TaskView = props => {
       }));
       return;
     }
+    // Set initial changelogentry
+    let changelogEntry = {
+      type,
+      details: value,
+      date: new Date(),
+      changeBy: 'Rasamune',
+    };
     // If checklist update value input
     if (type === 'checklist') {
       if (task.checklist.length > 0) {
         const newId = `check${
           +task.checklist[task.checklist.length - 1].id.slice(-1) + 1
         }`;
+        changelogEntry = {
+          type: 'taskAdd',
+          details: value,
+          date: new Date(),
+          changeBy: 'Rasamune',
+        };
         value = [
           ...task.checklist,
           {
@@ -107,6 +142,12 @@ const TaskView = props => {
           },
         ];
       } else {
+        changelogEntry = {
+          type: 'taskAdd',
+          details: value,
+          date: new Date(),
+          changeBy: 'Rasamune',
+        };
         value = [
           {
             id: 'check1',
@@ -128,7 +169,23 @@ const TaskView = props => {
             ? prevArray
             : [...prevArray, curString];
         }, []);
-      if (value[0] === '') value = [];
+      // If all tags were removed
+      if (value[0] === '') {
+        value = [];
+        changelogEntry = {
+          type,
+          details: '<NO TAGS>',
+          date: new Date(),
+          changeBy: 'Rasamune',
+        };
+      } else {
+        changelogEntry = {
+          type,
+          details: value.join(', '),
+          date: new Date(),
+          changeBy: 'Rasamune',
+        };
+      }
     }
     // If date update value input
     if (type === 'dueDate') {
@@ -144,6 +201,7 @@ const TaskView = props => {
     const updatedTask = {
       ...task,
       [type]: value,
+      changelog: [changelogEntry, ...task.changelog],
     };
 
     props.onUpdateTask(updatedTask);
@@ -164,10 +222,12 @@ const TaskView = props => {
   };
 
   const editPriorityHandler = e => {
+    const value = e.target.dataset.value;
     setEditFields(prevState => ({
       ...prevState,
       priority: {
         editting: true,
+        value: value,
       },
     }));
   };
@@ -189,11 +249,9 @@ const TaskView = props => {
   };
 
   const removeItemHandler = e => {
-    const updatedTask = { ...task };
-    const itemIndex = updatedTask.checklist.findIndex(
+    const itemIndex = task.checklist.findIndex(
       item => item.id === e.target.dataset.id
     );
-    updatedTask.checklist.splice(itemIndex, 1);
 
     setEditFields(prevState => ({
       ...prevState,
@@ -202,6 +260,20 @@ const TaskView = props => {
         value: null,
       },
     }));
+
+    const updatedTask = {
+      ...task,
+      changelog: [
+        {
+          type: 'taskRemove',
+          details: task.checklist[itemIndex].title,
+          date: new Date(),
+          changeBy: 'Rasamune',
+        },
+        ...task.changelog,
+      ],
+    };
+    updatedTask.checklist.splice(itemIndex, 1);
 
     props.onUpdateTask(updatedTask);
   };
@@ -231,6 +303,10 @@ const TaskView = props => {
     }));
   };
 
+  const addCommentHandler = incomingTask => {
+    props.onUpdateTask(incomingTask);
+  };
+
   useEffect(() => {
     if (!task) navigate('/');
   }, [task, navigate]);
@@ -252,7 +328,7 @@ const TaskView = props => {
             {editFields.deleteTask.editting && (
               <div className={classes.confirmdelete}>
                 <div className={classes.confirm} onClick={deleteTaskHandler}>
-                  Confirm
+                  Confirm Delete
                 </div>
                 <div
                   className={classes.cancel}
@@ -421,6 +497,7 @@ const TaskView = props => {
                         classes[task.priority]
                       }`}
                       onClick={editPriorityHandler}
+                      data-value={task.priority}
                     >
                       {task.priority} priority
                     </div>
@@ -458,33 +535,19 @@ const TaskView = props => {
                   )}
                 </div>
                 <p>
-                  Updated by {task.lastUpdatedBy} {timeStamp}
+                  {task.changelog.length > 0 ? 'Updated' : 'Created'} by{' '}
+                  {task.lastUpdatedBy} {timeStamp}
                 </p>
               </div>
             </div>
+            {!isMobileView && task.changelog.length > 0 && (
+              <ChangelogView task={task} />
+            )}
           </div>
-          <div className={classes['comments-container']}>
-            <h1>Comments</h1>
-            <div className={classes.addcomment}>
-              <p>Add Comment +</p>
-            </div>
-            <div className={classes.comments}>
-              <ul>
-                {task.comments &&
-                  task.comments.map(comment => (
-                    <li key={comment.id} className={classes.bubble}>
-                      <div className={classes.info}>
-                        <p className={classes.createdby}>{comment.createdBy}</p>
-                        <p className={classes.time}>July 2nd 2022, 11:43pm</p>
-                      </div>
-                      <div className={classes.comment}>
-                        <p>{comment.comment}</p>
-                      </div>
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          </div>
+          <CommentsView task={task} onAddComment={addCommentHandler} />
+          {isMobileView && task.changelog.length > 0 && (
+            <ChangelogView task={task} />
+          )}
         </>
       )}
     </section>

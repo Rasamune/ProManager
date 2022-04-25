@@ -1,0 +1,51 @@
+.task-filter-container {
+  margin: 1rem 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.sort {
+  display: flex;
+}
+
+.sort label {
+  width: 35%;
+  padding: 0.25rem;
+}
+
+.sort .filterchoice {
+  position: relative;
+  width: 100%;
+  background-color: white;
+  padding: 0.25rem;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.sort .filterchoice:hover > .filterlist {
+  display: initial;
+}
+
+.sort .filterlist {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 1.8rem;
+  z-index: 1;
+  background-color: white;
+  width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  -webkit-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
+}
+
+.sort .filterlist li {
+  padding: 0.25rem 0.5rem;
+}
+
+.sort .filterlist li:hover {
+  background-color: lightblue;
+}

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import TaskListFilter from './TaskListFilter';
 import TaskList from './TaskList';
 import TaskView from './TaskView';
 import ProjectProgress from './ProjectProgress';
@@ -19,6 +20,52 @@ const DUMMY_PROJECT = [
             id: 'check1',
             title: 'Draw a logo',
             completed: true,
+          },
+        ],
+        comments: [],
+        changelog: [
+          {
+            type: 'title',
+            details: 'Add a secondary element',
+            date: new Date(),
+            changeBy: 'Rasamune',
+          },
+          {
+            type: 'details',
+            details:
+              'The UI is lackluster we need to add another element such as a sidebar or an overview panel',
+            date: new Date(),
+            changeBy: 'Rasamune',
+          },
+          {
+            type: 'dueDate',
+            details: new Date(),
+            date: new Date(),
+            changeBy: 'Rasamune',
+          },
+          {
+            type: 'taskAdd',
+            details: 'Get Approval',
+            date: new Date(),
+            changeBy: 'Rasamune',
+          },
+          {
+            type: 'taskRemove',
+            details: 'Get Approval',
+            date: new Date(),
+            changeBy: 'Rasamune',
+          },
+          {
+            type: 'priority',
+            details: 'high',
+            date: new Date(),
+            changeBy: 'Rasamune',
+          },
+          {
+            type: 'tags',
+            details: 'logo title important',
+            date: new Date(),
+            changeBy: 'Rasamune',
           },
         ],
         dateCreated: new Date(),
@@ -86,6 +133,7 @@ const DUMMY_PROJECT = [
             comment: 'You are totally right',
           },
         ],
+        changelog: [],
         dateCreated: new Date(),
         dateUpdated: new Date(),
         dueDate: new Date(),
@@ -107,6 +155,7 @@ const DUMMY_PROJECT = [
             completed: true,
           },
         ],
+        changelog: [],
         dateCreated: new Date(),
         dateUpdated: new Date(),
         dueDate: new Date(),
@@ -128,6 +177,8 @@ const DUMMY_PROJECT = [
             completed: false,
           },
         ],
+        comments: [],
+        changelog: [],
         dateCreated: new Date(),
         dateUpdated: new Date(),
         dueDate: new Date(),
@@ -159,6 +210,8 @@ const DUMMY_PROJECT = [
             completed: false,
           },
         ],
+        comments: [],
+        changelog: [],
         dateCreated: new Date(),
         dateUpdated: new Date(),
         dueDate: new Date(),
@@ -193,6 +246,8 @@ const DUMMY_PROJECT = [
         dateCreated: new Date(),
         dateUpdated: new Date(),
         dueDate: new Date(),
+        comments: [],
+        changelog: [],
         progress: 0,
         priority: 'low',
         status: 'new',
@@ -221,9 +276,11 @@ const DUMMY_PROJECT = [
             completed: false,
           },
         ],
+        comments: [],
         dateCreated: new Date(),
         dateUpdated: new Date(),
         dueDate: new Date(),
+        changelog: [],
         progress: 0,
         priority: 'low',
         status: 'new',
@@ -252,9 +309,11 @@ const DUMMY_PROJECT = [
             completed: false,
           },
         ],
+        comments: [],
         dateCreated: new Date(),
         dateUpdated: new Date(),
         dueDate: new Date(),
+        changelog: [],
         progress: 0,
         priority: 'low',
         status: 'new',
@@ -276,7 +335,26 @@ const getLocalStorage = () => {
 
 const ProjectView = () => {
   const [projectTasks, setProjectTasks] = useState(getLocalStorage());
+  const [filters, setFilters] = useState({
+    time: {
+      value: 'new',
+      name: 'Newest',
+    },
+    progress: {
+      value: 'all',
+      name: 'All Tasks',
+    },
+    priority: {
+      value: 'all',
+      name: 'Any Priority',
+    },
+    view: {
+      value: 'expand',
+      name: 'Expanded',
+    },
+  });
   const navigate = useNavigate();
+  const location = useLocation();
 
   const updateTaskProgress = task => {
     // Set Task Status
@@ -306,6 +384,8 @@ const ProjectView = () => {
       title: 'Click here to name the task',
       details: 'Click here to give the task a description',
       checklist: [],
+      comments: [],
+      changelog: [],
       dateCreated: new Date(),
       dateUpdated: new Date(),
       dueDate: new Date(),
@@ -348,20 +428,39 @@ const ProjectView = () => {
     window.localStorage.setItem('tasks', JSON.stringify(tasksToSave));
   };
 
+  const handleFilterChange = (type, value, name) => {
+    setFilters(prevState => ({
+      ...prevState,
+      [type]: {
+        value,
+        name,
+      },
+    }));
+  };
+
   return (
     <section>
       <div className={classes.head}>
         <h1>{DUMMY_PROJECT[0].title}</h1>
-        <button className={classes['new-task']} onClick={addNewTaskHandler}>
-          + New Task
-        </button>
+        {location.pathname === '/' && (
+          <button className={classes['new-task']} onClick={addNewTaskHandler}>
+            + New Task
+          </button>
+        )}
         <ProjectProgress tasks={projectTasks} />
       </div>
+      {location.pathname === '/' && (
+        <TaskListFilter filters={filters} onFilterChange={handleFilterChange} />
+      )}
       <Routes>
         <Route
           path="/"
           element={
-            <TaskList tasks={projectTasks} onUpdateTask={updateTaskHandler} />
+            <TaskList
+              tasks={projectTasks}
+              onUpdateTask={updateTaskHandler}
+              filters={filters}
+            />
           }
         />
         <Route

@@ -1,0 +1,26 @@
+.changelog-container {
+  padding: 0 3rem 3rem;
+}
+
+.changelog-container h1 {
+  margin: 0;
+  padding: 0;
+  color: gray;
+}
+
+.changelog-container ul {
+  list-style: none;
+  margin: 0;
+  padding: 1rem 0 0;
+}
+
+.changelog-container li {
+  padding: 0.25rem 0 0.35rem;
+  border-top: 1px solid lightgray;
+  font-size: 0.75rem;
+  color: gray;
+}
+
+.changelog-container span {
+  font-weight: bold;
+}

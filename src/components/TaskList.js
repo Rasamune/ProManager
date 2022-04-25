@@ -10,6 +10,7 @@ const TaskList = props => {
     taskThirdColumn: [],
   });
   const isMobileView = window.innerWidth < 768;
+  const filters = props.filters;
 
   const checklistClickHandler = useCallback(
     task => {
@@ -18,13 +19,90 @@ const TaskList = props => {
     [props]
   );
 
+  const filterTasks = useCallback(
+    tasks => {
+      // Filter Time
+      if (filters.time.value !== 'new') {
+        if (filters.time.value === 'update') {
+          tasks.sort((a, b) => {
+            return new Date(b.dateUpdated) - new Date(a.dateUpdated);
+          });
+        }
+        if (filters.time.value === 'dueDate') {
+          tasks.sort((a, b) => {
+            return new Date(a.dueDate) - new Date(b.dueDate);
+          });
+        }
+        if (filters.time.value === 'old') {
+          tasks.reverse();
+        }
+      }
+
+      // Filter Priority
+      if (filters.priority.value !== 'all') {
+        const tasksHighPriority = tasks.filter(
+          task => task.priority === 'high'
+        );
+        const tasksMediumPriority = tasks.filter(
+          task => task.priority === 'medium'
+        );
+        const tasksLowPriority = tasks.filter(task => task.priority === 'low');
+        if (filters.priority.value === 'high') {
+          tasks = [
+            ...tasksHighPriority,
+            ...tasksMediumPriority,
+            ...tasksLowPriority,
+          ];
+        }
+        if (filters.priority.value === 'medium') {
+          tasks = [
+            ...tasksMediumPriority,
+            ...tasksHighPriority,
+            ...tasksLowPriority,
+          ];
+        }
+        if (filters.priority.value === 'low') {
+          tasks = [
+            ...tasksLowPriority,
+            ...tasksMediumPriority,
+            ...tasksHighPriority,
+          ];
+        }
+      }
+
+      // Filter Progress
+      if (filters.progress.value !== 'all') {
+        const tasksCompleted = tasks.filter(
+          task => task.status === 'completed'
+        );
+        const tasksInProgress = tasks.filter(
+          task => task.status === 'inprogress'
+        );
+        const tasksNotStarted = tasks.filter(task => task.status === 'new');
+        if (filters.progress.value === 'completed') {
+          tasks = [...tasksCompleted, ...tasksInProgress, ...tasksNotStarted];
+        }
+        if (filters.progress.value === 'inprogress') {
+          tasks = [...tasksInProgress, ...tasksNotStarted, ...tasksCompleted];
+        }
+        if (filters.progress.value === 'new') {
+          tasks = [...tasksNotStarted, ...tasksInProgress, ...tasksCompleted];
+        }
+      }
+      return tasks;
+    },
+    [filters]
+  );
+
   useEffect(() => {
-    const tasks = [...projectTasks];
+    let tasks = [...projectTasks];
     let taskFirstColumn = [];
     let taskSecondColumn = [];
     let taskThirdColumn = [];
 
     tasks.reverse();
+
+    tasks = filterTasks(tasks);
 
     if (isMobileView) {
       tasks.forEach((task, index) => {
@@ -33,6 +111,7 @@ const TaskList = props => {
             key={task.id}
             task={task}
             onChecklistClick={checklistClickHandler}
+            view={filters.view.value}
           />
         );
       });
@@ -52,6 +131,7 @@ const TaskList = props => {
             key={task.id}
             task={task}
             onChecklistClick={checklistClickHandler}
+            view={filters.view.value}
           />
         );
         return;
@@ -63,6 +143,7 @@ const TaskList = props => {
             key={task.id}
             task={task}
             onChecklistClick={checklistClickHandler}
+            view={filters.view.value}
           />
         );
         return;
@@ -73,6 +154,7 @@ const TaskList = props => {
           key={task.id}
           task={task}
           onChecklistClick={checklistClickHandler}
+          view={filters.view.value}
         />
       );
     });
@@ -81,7 +163,13 @@ const TaskList = props => {
       taskSecondColumn,
       taskThirdColumn,
     });
-  }, [checklistClickHandler, projectTasks, isMobileView]);
+  }, [
+    checklistClickHandler,
+    filterTasks,
+    filters.view,
+    projectTasks,
+    isMobileView,
+  ]);
 
   return (
     <div className={classes['tasks-container']}>

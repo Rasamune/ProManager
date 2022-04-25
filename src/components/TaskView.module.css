@@ -330,60 +330,6 @@
   width: 100%;
 }
 
-.comments-container h1 {
-  margin: 1rem 0;
-}
-
-.comments-container .addcomment {
-  background-color: #fffacd;
-  margin: 0 2rem 0 0;
-  text-align: center;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.comments-container .addcomment p {
-  padding: 0.75rem;
-}
-
-.comments ul {
-  list-style-type: none;
-  margin: 0.25rem 2rem 2rem 0;
-  padding: 0;
-  background-color: white;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.comments ul li {
-  border-bottom: 1px solid lightgray;
-}
-
-.comments ul li:last-child {
-  border-bottom: none;
-}
-
-.comments .comment {
-  background-color: white;
-  padding: 0.25rem 1rem 1.5rem;
-}
-
-.comments .comment p {
-  padding: 0;
-  margin: 0;
-}
-
-.comments .info .time {
-  float: right;
-  font-size: 0.75rem;
-}
-
-.comments .info p {
-  margin: 1rem 1rem 0.25rem;
-  font-size: 0.75rem;
-  display: inline-block;
-}
-
 @media (max-width: 30em) {
   .task-view {
     grid-template-columns: 1fr;

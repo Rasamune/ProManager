@@ -1,0 +1,92 @@
+.comments-container {
+  margin: 0.25rem 2rem 2rem 0;
+}
+
+.comments-container h1 {
+  margin: 1rem 0;
+}
+
+.comments-container .addcomment {
+  background-color: #fffacd;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.comments-container .addcomment p {
+  padding: 0.75rem;
+}
+
+.comments-container .postcomment {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+}
+
+.comments-container .postcomment button {
+  border: none;
+  font-size: 1rem;
+  margin: 0;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.comments-container .postcomment .post {
+  background-color: #fffacd;
+}
+
+.comments-container textarea {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  margin: 0 2rem 0 0;
+  width: 98%;
+  resize: vertical;
+  min-height: 4rem;
+  font-size: 1rem;
+}
+
+.comments ul {
+  list-style-type: none;
+  padding: 0;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.comments ul li {
+  border-bottom: 1px solid lightgray;
+}
+
+.comments ul li:last-child {
+  border-bottom: none;
+}
+
+.comments .comment {
+  background-color: white;
+  padding: 0.25rem 1rem 1.5rem;
+}
+
+.comments .comment p {
+  padding: 0;
+  margin: 0;
+}
+
+.comments .info .time {
+  float: right;
+  font-size: 0.75rem;
+}
+
+.comments .info p {
+  margin: 1rem 1rem 0.25rem;
+  font-size: 0.75rem;
+  display: inline-block;
+}
+
+@media (max-width: 728px) {
+  .comments-container {
+    margin: 0 2rem 2rem;
+  }
+}
