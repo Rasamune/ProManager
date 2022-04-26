@@ -10,9 +10,8 @@ const TaskView = props => {
   const projectTasks = props.tasks;
   const { taskId } = useParams();
   const task = projectTasks.find(task => task.id === taskId);
-  const timeStamp = useTimestamp(task.dateUpdated);
-  const dueDate = useDateFormat(task.dueDate);
-  const createdDate = useDateFormat(task.dateCreated);
+  const timestamp = useTimestamp;
+  const formatDate = useDateFormat;
   const isMobileView = window.innerWidth < 768;
 
   const [editFields, setEditFields] = useState({
@@ -47,7 +46,7 @@ const TaskView = props => {
   });
 
   const backClickHandler = e => {
-    navigate('/');
+    navigate(props.location);
   };
 
   const checklistClickHandler = e => {
@@ -289,7 +288,7 @@ const TaskView = props => {
   };
 
   const deleteTaskHandler = e => {
-    navigate('/');
+    navigate(props.location);
     props.onDeleteTask(task);
   };
 
@@ -308,8 +307,8 @@ const TaskView = props => {
   };
 
   useEffect(() => {
-    if (!task) navigate('/');
-  }, [task, navigate]);
+    if (!task) navigate(props.location);
+  }, [task, navigate, props.location]);
 
   return (
     <section className={classes['task-view']}>
@@ -378,12 +377,12 @@ const TaskView = props => {
                     data-type="dueDate"
                   >
                     <span className={classes.title}>DUE DATE</span>
-                    {dueDate}
+                    {formatDate(task.dueDate)}
                   </div>
                 )}
               </div>
               <p className={classes.createdby}>
-                Created by {task.createdBy} on {createdDate}
+                Created by {task.createdBy} on {formatDate(task.dateCreated)}
               </p>
               {editFields.details.editting && (
                 <textarea
@@ -536,7 +535,7 @@ const TaskView = props => {
                 </div>
                 <p>
                   {task.changelog.length > 0 ? 'Updated' : 'Created'} by{' '}
-                  {task.lastUpdatedBy} {timeStamp}
+                  {task.lastUpdatedBy} {timestamp(task.dateUpdated)}
                 </p>
               </div>
             </div>

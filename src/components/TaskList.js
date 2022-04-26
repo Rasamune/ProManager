@@ -4,6 +4,7 @@ import TaskItem from './TaskItem';
 
 const TaskList = props => {
   const projectTasks = props.tasks;
+
   const [projectTasksColumns, setProjectTasksColumns] = useState({
     taskFirstColumn: [],
     taskSecondColumn: [],
@@ -21,6 +22,9 @@ const TaskList = props => {
 
   const filterTasks = useCallback(
     tasks => {
+      // Reverse Task List (Newest First)
+      tasks.reverse();
+
       // Filter Time
       if (filters.time.value !== 'new') {
         if (filters.time.value === 'update') {
@@ -38,60 +42,46 @@ const TaskList = props => {
         }
       }
 
-      // Filter Priority
-      if (filters.priority.value !== 'all') {
-        const tasksHighPriority = tasks.filter(
-          task => task.priority === 'high'
-        );
-        const tasksMediumPriority = tasks.filter(
-          task => task.priority === 'medium'
-        );
-        const tasksLowPriority = tasks.filter(task => task.priority === 'low');
-        if (filters.priority.value === 'high') {
-          tasks = [
-            ...tasksHighPriority,
-            ...tasksMediumPriority,
-            ...tasksLowPriority,
-          ];
-        }
-        if (filters.priority.value === 'medium') {
-          tasks = [
-            ...tasksMediumPriority,
-            ...tasksHighPriority,
-            ...tasksLowPriority,
-          ];
-        }
-        if (filters.priority.value === 'low') {
-          tasks = [
-            ...tasksLowPriority,
-            ...tasksMediumPriority,
-            ...tasksHighPriority,
-          ];
-        }
-      }
+      const filter = (tasks, filterValue, compareValue) => {
+        if (filterValue !== 'all') {
+          let tasksFiltered = [];
+          let tasksRemainder = [];
 
-      // Filter Progress
-      if (filters.progress.value !== 'all') {
-        const tasksCompleted = tasks.filter(
-          task => task.status === 'completed'
-        );
-        const tasksInProgress = tasks.filter(
-          task => task.status === 'inprogress'
-        );
-        const tasksNotStarted = tasks.filter(task => task.status === 'new');
-        if (filters.progress.value === 'completed') {
-          tasks = [...tasksCompleted, ...tasksInProgress, ...tasksNotStarted];
+          tasks.forEach(task => {
+            if (task[compareValue] === filterValue) {
+              tasksFiltered.push(task);
+              return;
+            }
+            tasksRemainder.push(task);
+          });
+          tasks = [...tasksFiltered, ...tasksRemainder];
+
+          return tasks;
         }
-        if (filters.progress.value === 'inprogress') {
-          tasks = [...tasksInProgress, ...tasksNotStarted, ...tasksCompleted];
-        }
-        if (filters.progress.value === 'new') {
-          tasks = [...tasksNotStarted, ...tasksInProgress, ...tasksCompleted];
-        }
-      }
+        return tasks;
+      };
+
+      tasks = filter(tasks, filters.priority.value, 'priority');
+      tasks = filter(tasks, filters.progress.value, 'status');
+
       return tasks;
     },
     [filters]
+  );
+
+  const newTaskItemComponent = useCallback(
+    task => {
+      return (
+        <TaskItem
+          key={task.id}
+          task={task}
+          onChecklistClick={checklistClickHandler}
+          view={filters.view.value}
+          location={props.location}
+        />
+      );
+    },
+    [checklistClickHandler, filters.view, props.location]
   );
 
   useEffect(() => {
@@ -100,76 +90,39 @@ const TaskList = props => {
     let taskSecondColumn = [];
     let taskThirdColumn = [];
 
-    tasks.reverse();
-
     tasks = filterTasks(tasks);
 
     if (isMobileView) {
       tasks.forEach((task, index) => {
-        taskFirstColumn.push(
-          <TaskItem
-            key={task.id}
-            task={task}
-            onChecklistClick={checklistClickHandler}
-            view={filters.view.value}
-          />
-        );
+        taskFirstColumn.push(newTaskItemComponent(task));
       });
 
       setProjectTasksColumns({
         taskFirstColumn,
       });
-
       return;
     }
 
     tasks.forEach((task, index) => {
       if ((index + 1) % 3 === 0) {
         // Populate 3rd Column
-        taskThirdColumn.push(
-          <TaskItem
-            key={task.id}
-            task={task}
-            onChecklistClick={checklistClickHandler}
-            view={filters.view.value}
-          />
-        );
+        taskThirdColumn.push(newTaskItemComponent(task));
         return;
       }
       if ((index + 1) % 3 === 2) {
         // Populate 2nd Column
-        taskSecondColumn.push(
-          <TaskItem
-            key={task.id}
-            task={task}
-            onChecklistClick={checklistClickHandler}
-            view={filters.view.value}
-          />
-        );
+        taskSecondColumn.push(newTaskItemComponent(task));
         return;
       }
       // Populate 1st Column
-      taskFirstColumn.push(
-        <TaskItem
-          key={task.id}
-          task={task}
-          onChecklistClick={checklistClickHandler}
-          view={filters.view.value}
-        />
-      );
+      taskFirstColumn.push(newTaskItemComponent(task));
     });
     setProjectTasksColumns({
       taskFirstColumn,
       taskSecondColumn,
       taskThirdColumn,
     });
-  }, [
-    checklistClickHandler,
-    filterTasks,
-    filters.view,
-    projectTasks,
-    isMobileView,
-  ]);
+  }, [newTaskItemComponent, filterTasks, projectTasks, isMobileView]);
 
   return (
     <div className={classes['tasks-container']}>

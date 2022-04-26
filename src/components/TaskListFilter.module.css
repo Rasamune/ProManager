@@ -20,14 +20,14 @@
   padding: 0.25rem;
   margin-right: 1rem;
   cursor: pointer;
+  outline: 1px lightgray solid;
 }
 
-.sort .filterchoice:hover > .filterlist {
-  display: initial;
+.sort .filterchoice.selected {
+  background-color: lightgray;
 }
 
 .sort .filterlist {
-  display: none;
   position: absolute;
   left: 0;
   top: 1.8rem;

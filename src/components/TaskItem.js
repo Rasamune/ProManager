@@ -44,7 +44,7 @@ const TaskItem = props => {
 
   const taskClickHandler = e => {
     if (e.target.classList.contains('listItem')) return;
-    navigate(`/${props.task.id}`);
+    navigate(`${props.location}/${props.task.id}`);
   };
   return (
     <div
@@ -81,7 +81,7 @@ const TaskItem = props => {
         <div className={`${classes.priority} ${classes[props.task.priority]}`}>
           <p>{props.task.priority}</p>
         </div>
-        <p>{timeStamp}</p>
+        <p>Updated {timeStamp}</p>
       </div>
     </div>
   );
