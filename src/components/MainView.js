@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import ProjectList from './ProjectList';
 import ProjectView from './ProjectView';
 
@@ -339,6 +339,7 @@ const getLocalStorage = () => {
 
 const MainView = () => {
   const [projects, setProjects] = useState(getLocalStorage());
+  const navigate = useNavigate();
   const location = useLocation();
 
   const updateProjects = incomingProject => {
@@ -357,22 +358,24 @@ const MainView = () => {
   };
 
   const addNewProjectHandler = () => {
-    // const newId = `task${Date.now()}`;
-    // const projectsToUpdate = [...projects];
-    // projectsToUpdate.push({
-    //   id: newId,
-    //   title: 'Click here to name project',
-    //   tasks: [],
-    // });
-    // setProjects(projectsToUpdate);
-    // window.localStorage.setItem('projects', JSON.stringify(projectsToUpdate));
+    const newId = `project${Date.now()}`;
+    const projectsToUpdate = [...projects];
+    projectsToUpdate.push({
+      id: newId,
+      title: 'Click here to name project',
+      tasks: [],
+    });
+    setProjects(projectsToUpdate);
+    window.localStorage.setItem('projects', JSON.stringify(projectsToUpdate));
+
+    navigate(`/project/${newId}`);
   };
 
   return (
     <section>
       {location.pathname === '/' && (
         <div className={classes.head}>
-          <h1>Project List</h1>
+          <h1>Projects</h1>
           <button
             className={classes['new-project']}
             onClick={addNewProjectHandler}

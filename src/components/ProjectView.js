@@ -22,6 +22,10 @@ const ProjectView = props => {
   const { projectId } = useParams();
   const project = projects.find(project => project.id === projectId);
   const [projectTasks, setProjectTasks] = useState([]);
+  const [editProjectTitle, setEditProjectTitle] = useState({
+    editting: false,
+    value: '',
+  });
   const [filters, setFilters] = useState({
     time: {
       value: 'new',
@@ -132,6 +136,54 @@ const ProjectView = props => {
     }));
   };
 
+  const editInputHandler = e => {
+    let value = e.target.textContent;
+
+    setEditProjectTitle(prevState => ({
+      editting: true,
+      value: value,
+    }));
+  };
+
+  const inputBlurHandler = e => {
+    const value = e.target.value;
+    const type = e.target.dataset.type;
+    finishEdittingInputHandler(value, type);
+  };
+
+  const inputEnterKeyHandler = e => {
+    if (e.key === 'Enter') {
+      const value = e.target.value;
+      const type = e.target.dataset.type;
+      finishEdittingInputHandler(value, type);
+    }
+  };
+
+  const finishEdittingInputHandler = (value, type) => {
+    // If values are empty, cancel editting
+    if (
+      ((value === '' || value.length === 0) && type !== 'tags') ||
+      value === editProjectTitle.value
+    ) {
+      setEditProjectTitle(prevState => ({
+        ...prevState,
+        editting: false,
+      }));
+      return;
+    }
+    setEditProjectTitle(prevState => ({
+      ...prevState,
+      editting: false,
+      value: null,
+    }));
+    const updatedProject = {
+      ...project,
+      title: value,
+    };
+
+    props.onUpdateProject(updatedProject);
+  };
+
   useEffect(() => {
     if (!project) navigate('/');
     if (project) setProjectTasks(project.tasks);
@@ -142,7 +194,20 @@ const ProjectView = props => {
       {project && (
         <>
           <div className={classes.head}>
-            <h1>{project.title}</h1>
+            {!editProjectTitle.editting && (
+              <h1 onClick={editInputHandler}>{project.title}</h1>
+            )}
+            {editProjectTitle.editting && (
+              <input
+                autoFocus
+                className={classes.title}
+                type="text"
+                defaultValue={editProjectTitle.value}
+                onBlur={inputBlurHandler}
+                onKeyDown={inputEnterKeyHandler}
+                data-type="title"
+              />
+            )}
             {matchPath.pathnameBase === `/project/${project.id}` && (
               <button
                 className={classes['new-task']}
