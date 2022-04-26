@@ -341,30 +341,31 @@ const MainView = () => {
   const [projects, setProjects] = useState(getLocalStorage());
   const location = useLocation();
 
-  const updateProjectsHandler = incomingProject => {};
-
-  const updateLocalStorageHandler = incomingProject => {
+  const updateProjects = incomingProject => {
     const projectIndex = projects.findIndex(
       proj => proj.id === incomingProject.id
     );
     const projectsToUpdate = [...projects];
     projectsToUpdate[projectIndex] = incomingProject;
 
-    window.localStorage.setItem('projects', JSON.stringify(projectsToUpdate));
+    setProjects(projectsToUpdate);
+    updateLocalStorageHandler(projectsToUpdate);
+  };
+
+  const updateLocalStorageHandler = incomingProjects => {
+    window.localStorage.setItem('projects', JSON.stringify(incomingProjects));
   };
 
   const addNewProjectHandler = () => {
-    const newId = `project${Date.now()}`;
-    setProjects(prevState => [
-      ...prevState,
-      {
-        id: newId,
-        title: 'Add Title',
-        tasks: [],
-      },
-    ]);
-
-    // updateLocalStorageHandler(tasks);
+    // const newId = `task${Date.now()}`;
+    // const projectsToUpdate = [...projects];
+    // projectsToUpdate.push({
+    //   id: newId,
+    //   title: 'Click here to name project',
+    //   tasks: [],
+    // });
+    // setProjects(projectsToUpdate);
+    // window.localStorage.setItem('projects', JSON.stringify(projectsToUpdate));
   };
 
   return (
@@ -385,10 +386,7 @@ const MainView = () => {
         <Route
           path="/project/:projectId/*"
           element={
-            <ProjectView
-              projects={projects}
-              onUpdateLocalStorage={updateLocalStorageHandler}
-            />
+            <ProjectView projects={projects} onUpdateProject={updateProjects} />
           }
         />
       </Routes>

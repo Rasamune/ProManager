@@ -83,7 +83,7 @@ const ProjectView = props => {
     };
     tasks.push(newTask);
 
-    updateLocalStorage(tasks);
+    updateProject(tasks);
     setProjectTasks(tasks);
     navigate(`${matchPath.pathnameBase}/${newId}`);
   };
@@ -103,7 +103,7 @@ const ProjectView = props => {
 
     tasks[taskIndex] = updatedTask;
 
-    updateLocalStorage(tasks);
+    updateProject(tasks);
     setProjectTasks(tasks);
   };
 
@@ -112,14 +112,14 @@ const ProjectView = props => {
     const taskIndex = tasks.findIndex(task => incomingTask.id === task.id);
     tasks.splice(taskIndex, 1);
 
-    updateLocalStorage(tasks);
+    updateProject(tasks);
     setProjectTasks(tasks);
   };
 
-  const updateLocalStorage = tasksToSave => {
+  const updateProject = tasksToSave => {
     const projectToSave = { ...project };
     projectToSave.tasks = tasksToSave;
-    props.onUpdateLocalStorage(projectToSave);
+    props.onUpdateProject(projectToSave);
   };
 
   const handleFilterChange = (type, value, name) => {
