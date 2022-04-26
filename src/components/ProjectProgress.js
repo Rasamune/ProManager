@@ -30,6 +30,17 @@ const ProjectProgress = props => {
           break;
       }
     });
+
+    if (
+      progress.status.completed.length === 0 &&
+      progress.status.inprogress.length === 0 &&
+      progress.status.remaining.length === 0
+    ) {
+      progress.status.remaining.push(
+        <li key={`progress-0`} className={classes.notasks}></li>
+      );
+    }
+
     const progressList = [
       ...progress.status.completed,
       ...progress.status.inprogress,

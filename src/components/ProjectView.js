@@ -6,6 +6,7 @@ import {
   useLocation,
   Navigate,
   useParams,
+  useMatch,
 } from 'react-router-dom';
 import TaskListFilter from './TaskListFilter';
 import TaskList from './TaskList';
@@ -14,6 +15,9 @@ import ProjectProgress from './ProjectProgress';
 import classes from './ProjectView.module.css';
 
 const ProjectView = props => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const matchPath = useMatch(location.pathname);
   const projects = props.projects;
   const { projectId } = useParams();
   const project = projects.find(project => project.id === projectId);
@@ -36,8 +40,6 @@ const ProjectView = props => {
       name: 'Expanded',
     },
   });
-  const navigate = useNavigate();
-  const location = useLocation();
 
   const updateTaskProgress = task => {
     // Set Task Status
@@ -83,7 +85,7 @@ const ProjectView = props => {
 
     updateLocalStorage(tasks);
     setProjectTasks(tasks);
-    navigate(`/${newId}`);
+    navigate(`${matchPath.pathnameBase}/${newId}`);
   };
 
   const updateTaskHandler = incomingTask => {
@@ -115,11 +117,9 @@ const ProjectView = props => {
   };
 
   const updateLocalStorage = tasksToSave => {
-    const projectIndex = projects.findIndex(proj => proj.id === project.id);
-    const projectsToUpdate = [...projects];
-    projectsToUpdate[projectIndex].tasks = tasksToSave;
-
-    window.localStorage.setItem('projects', JSON.stringify(projectsToUpdate));
+    const projectToSave = { ...project };
+    projectToSave.tasks = tasksToSave;
+    props.onUpdateLocalStorage(projectToSave);
   };
 
   const handleFilterChange = (type, value, name) => {
@@ -143,7 +143,7 @@ const ProjectView = props => {
         <>
           <div className={classes.head}>
             <h1>{project.title}</h1>
-            {location.pathname.includes(`${project.id}`) && (
+            {matchPath.pathnameBase === `/project/${project.id}` && (
               <button
                 className={classes['new-task']}
                 onClick={addNewTaskHandler}
@@ -153,7 +153,7 @@ const ProjectView = props => {
             )}
             <ProjectProgress tasks={projectTasks} />
           </div>
-          {location.pathname.includes(`${project.id}`) && (
+          {matchPath.pathnameBase === `/project/${project.id}` && (
             <TaskListFilter
               filters={filters}
               onFilterChange={handleFilterChange}
@@ -167,7 +167,6 @@ const ProjectView = props => {
                   tasks={projectTasks}
                   onUpdateTask={updateTaskHandler}
                   filters={filters}
-                  location={`/project/${project.id}`}
                 />
               }
             />

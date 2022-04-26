@@ -77,11 +77,10 @@ const TaskList = props => {
           task={task}
           onChecklistClick={checklistClickHandler}
           view={filters.view.value}
-          location={props.location}
         />
       );
     },
-    [checklistClickHandler, filters.view, props.location]
+    [checklistClickHandler, filters.view]
   );
 
   useEffect(() => {

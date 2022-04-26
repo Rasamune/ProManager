@@ -1,15 +1,17 @@
 .progress-container ul {
   display: grid;
-  gap: 0.15rem;
+  gap: 1px;
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 .progress-container ul li {
   display: inline-block;
   height: 0.75rem;
-  border-radius: 2px;
+  border-radius: 3px;
   background-color: white;
+  border: 1px lightgray solid;
 }
 
 .progress-container ul li.completed {
@@ -18,4 +20,8 @@
 
 .progress-container ul li.inprogress {
   background-color: orange;
+}
+
+.progress-container ul li.notasks {
+  background-color: lightgray;
 }

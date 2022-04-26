@@ -1,9 +1,11 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, useMatch } from 'react-router-dom';
 import { useTimestamp } from '../hooks/use-timestamp';
 import classes from './TaskItem.module.css';
 
 const TaskItem = props => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const matchPath = useMatch(location.pathname);
   const timeStamp = useTimestamp(props.task.dateUpdated);
   const view = props.view;
 
@@ -44,8 +46,9 @@ const TaskItem = props => {
 
   const taskClickHandler = e => {
     if (e.target.classList.contains('listItem')) return;
-    navigate(`${props.location}/${props.task.id}`);
+    navigate(`${matchPath.pathnameBase}/${props.task.id}`);
   };
+
   return (
     <div
       className={`${classes.task} ${

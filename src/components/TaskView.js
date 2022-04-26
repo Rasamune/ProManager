@@ -307,7 +307,7 @@ const TaskView = props => {
   };
 
   useEffect(() => {
-    if (!task) navigate(props.location);
+    if (!task) navigate(props.location, { replace: true });
   }, [task, navigate, props.location]);
 
   return (

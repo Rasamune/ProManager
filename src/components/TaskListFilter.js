@@ -26,6 +26,14 @@ const TaskListFilter = props => {
     }));
   };
 
+  const closeListHandler = e => {
+    const type = e.target.closest('div').dataset.filter;
+    setDropdown(prevState => ({
+      ...prevState,
+      [type]: false,
+    }));
+  };
+
   return (
     <section className={classes['task-filter-container']}>
       <div className={classes.sort}>
@@ -35,6 +43,7 @@ const TaskListFilter = props => {
             dropdown.sort && classes.selected
           }`}
           onClick={toggleListHandler}
+          onMouseLeave={closeListHandler}
           data-filter="sort"
         >
           <span>{filters.time.name}</span>
@@ -59,6 +68,7 @@ const TaskListFilter = props => {
             dropdown.progress && classes.selected
           }`}
           onClick={toggleListHandler}
+          onMouseLeave={closeListHandler}
           data-filter="progress"
         >
           <span>{filters.progress.name}</span>
@@ -83,6 +93,7 @@ const TaskListFilter = props => {
             dropdown.priority && classes.selected
           }`}
           onClick={toggleListHandler}
+          onMouseLeave={closeListHandler}
           data-filter="priority"
         >
           <span>{filters.priority.name}</span>
@@ -107,6 +118,7 @@ const TaskListFilter = props => {
             dropdown.view && classes.selected
           }`}
           onClick={toggleListHandler}
+          onMouseLeave={closeListHandler}
           data-filter="view"
         >
           <span>{filters.view.name}</span>

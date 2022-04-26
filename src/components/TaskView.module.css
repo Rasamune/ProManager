@@ -3,8 +3,12 @@
   grid-template-columns: 2fr 1fr;
 }
 
+.task-container {
+  margin-right: 2rem;
+}
+
 .task-container > h1 {
-  margin: 1rem 2rem;
+  margin: 1rem 0;
   cursor: pointer;
   display: inline-block;
 }
@@ -12,7 +16,7 @@
 .task-container .delete-task {
   font-size: 1em;
   float: right;
-  margin: 1.15rem 3rem 0;
+  margin: 1.15rem 1rem 0;
   cursor: pointer;
 }
 
@@ -44,7 +48,7 @@
 
 .task {
   position: relative;
-  margin: 0 2rem 2rem;
+  margin: 0 0 2rem 0;
   padding: 2rem 2rem 1rem;
   border: 1px lightgrey solid;
   border-top: 0.5rem solid lightgray;
