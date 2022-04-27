@@ -49,3 +49,20 @@
 .sort .filterlist li:hover {
   background-color: lightblue;
 }
+
+@media (max-width: 30em) {
+  .task-filter-container {
+    grid-template-columns: 1fr;
+  }
+
+  .sort .filterchoice {
+    margin-right: 0;
+    padding: 0.5rem 0.25rem;
+  }
+  .sort .filterlist {
+    top: 2.5rem;
+  }
+  .sort .filterlist li {
+    padding: 0.5rem 0.5rem;
+  }
+}

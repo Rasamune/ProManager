@@ -25,6 +25,16 @@ const TaskList = props => {
       // Reverse Task List (Newest First)
       tasks.reverse();
 
+      if (filters.search.value !== '') {
+        const searchValue = filters.search.value.toLowerCase();
+        tasks = tasks.filter(task => {
+          const taskTitle = task.title.toLowerCase();
+          return (
+            taskTitle.includes(searchValue) || task.tags.includes(searchValue)
+          );
+        });
+      }
+
       // Filter Time
       if (filters.time.value !== 'new') {
         if (filters.time.value === 'update') {

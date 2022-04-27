@@ -3,9 +3,10 @@
 }
 
 .head h1 {
+  max-width: 60%;
   display: inline-block;
   font-size: 2rem;
-  margin: 0;
+  margin: 0.35rem 0 0;
 }
 
 .head h1:hover {
@@ -16,12 +17,45 @@
   margin: 1.5rem 0 1rem;
 }
 
+.head .right-column {
+  float: right;
+}
+
+.head .delete-project {
+  display: inline-block;
+  font-size: 1em;
+  margin: 1.15rem 1rem 0;
+  cursor: pointer;
+}
+
+.head .confirmdelete {
+  display: inline-block;
+  font-size: 1em;
+  margin: 1.15rem 1rem 0;
+}
+
+.head .confirmdelete div {
+  display: inline-block;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+
+.head .confirmdelete .confirm {
+  font-weight: bold;
+  color: yellowgreen;
+}
+
+.head .confirmdelete .cancel {
+  font-weight: bold;
+  color: orangered;
+}
+
 .head .new-task {
+  display: inline-block;
   border: 1px solid lightgray;
   border-radius: 30px;
   border-left: 0.5rem solid #47a8ff;
   font-size: 1.5rem;
-  float: right;
   padding: 0.5rem 2rem 0.5rem 1.25rem;
   background-color: white;
   cursor: pointer;
@@ -36,5 +70,131 @@
     sans-serif;
   font-weight: bold;
   font-size: 2rem;
+  width: 60%;
+  margin-top: 0.35rem;
+}
+
+.mininav {
+  margin: 1rem 0;
+}
+
+.mininav .navigator {
+  display: inline-block;
+}
+
+.mininav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mininav li {
+  display: inline-block;
+  margin-right: 0.4rem;
+  cursor: pointer;
+}
+
+.mininav li a:hover {
+  color: teal;
+}
+
+.mininav li:before {
+  content: '/ ';
+}
+
+.mininav .searchbar {
+  float: right;
+}
+
+.mininav .searchbar .searchbutton {
+  cursor: pointer;
+}
+
+.project-container .delete-task {
+  font-size: 1em;
+  float: right;
+  margin: 1.15rem 1rem 0;
+  cursor: pointer;
+}
+
+.task-container .confirmdelete {
+  font-size: 1em;
+  float: right;
+  margin: 1.15rem 1rem 0;
+}
+
+.search-results-container {
+  position: relative;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.search-results-container .searchresults {
+  position: relative;
+  display: block;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 10px;
+  display: inline-block;
   width: 75%;
+  cursor: pointer;
+}
+
+.search-results-container .searchresults:hover:after {
+  position: absolute;
+  top: 0;
+  left: 0.6rem;
+  content: 'x';
+  font-size: 1.5rem;
+  color: red;
+  font-weight: bold;
+}
+
+.search-results-container:after {
+  position: absolute;
+  bottom: -1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  content: '*Click to remove search filter';
+  font-size: 0.75rem;
+}
+
+.search-results-container .searchresults span {
+  font-weight: bold;
+}
+
+@media (max-width: 30em) {
+  .head h1 {
+    max-width: 100%;
+  }
+  .head input.title {
+    width: 100%;
+  }
+  .head .right-column {
+    float: none;
+    width: 100%;
+  }
+  .head .new-task {
+    width: 100%;
+  }
+  .head .delete-project {
+    margin: 0.5rem 1rem 1rem 0;
+  }
+  .head .confirmdelete {
+    display: inline-block;
+    font-size: 1em;
+    margin: 0.5rem 1rem 1rem 0;
+  }
+  .head .confirmdelete div {
+    margin: 0 1rem 0 0;
+  }
+  .head input {
+    width: 100%;
+  }
+  .head ul {
+    margin-top: 1rem;
+  }
+  .mininav .searchbar {
+    display: none;
+  }
 }

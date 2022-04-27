@@ -3,7 +3,9 @@ import ProjectItem from './ProjectItem';
 import classes from './ProjectList.module.css';
 
 const ProjectList = props => {
-  const projects = props.projects;
+  const projects = [...props.projects];
+  projects.reverse();
+
   return (
     <div className={classes['projects-container']}>
       {projects.map(project => (

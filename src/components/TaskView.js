@@ -164,6 +164,7 @@ const TaskView = props => {
         .replace(/\s+/g, ' ') // Remove all extra whitespace
         .split(' ')
         .reduce((prevArray, curString) => {
+          curString = curString.toLowerCase();
           return prevArray.includes(curString)
             ? prevArray
             : [...prevArray, curString];
@@ -288,7 +289,6 @@ const TaskView = props => {
   };
 
   const deleteTaskHandler = e => {
-    navigate(props.location);
     props.onDeleteTask(task);
   };
 
@@ -309,6 +309,10 @@ const TaskView = props => {
   useEffect(() => {
     if (!task) navigate(props.location, { replace: true });
   }, [task, navigate, props.location]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <section className={classes['task-view']}>

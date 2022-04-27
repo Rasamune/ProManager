@@ -24,3 +24,9 @@
 .changelog-container span {
   font-weight: bold;
 }
+
+@media (max-width: 30em) {
+  .changelog-container {
+    margin: 1rem 0 2rem;
+  }
+}

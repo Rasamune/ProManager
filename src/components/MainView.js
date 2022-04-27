@@ -7,11 +7,11 @@ import classes from './MainView.module.css';
 
 const DUMMY_PROJECTS = [
   {
-    id: 'p1',
+    id: 'p1651016613615',
     title: 'Cool Project',
     tasks: [
       {
-        id: 'card1',
+        id: 'task1651076819110',
         title: 'Make Logo',
         details: 'We need to make a logo for our Cool Project',
         checklist: [
@@ -78,7 +78,7 @@ const DUMMY_PROJECTS = [
         lastUpdatedBy: 'Rasamune',
       },
       {
-        id: 'card2',
+        id: 'task1651076824794',
         title: 'Add a secondary element to the UI',
         details:
           'The UI is lackluster we need to add another element such as a sidebar or an overview panel',
@@ -144,7 +144,7 @@ const DUMMY_PROJECTS = [
         lastUpdatedBy: 'Rasamune',
       },
       {
-        id: 'card3',
+        id: 'task1651076834756',
         title: 'Make Logo',
         details: 'We need to make a logo for our Cool Project',
         checklist: [
@@ -166,7 +166,7 @@ const DUMMY_PROJECTS = [
         lastUpdatedBy: 'Rasamune',
       },
       {
-        id: 'card4',
+        id: 'task1651076844644',
         title: 'Make Logo',
         details: 'We need to make a logo for our Cool Project',
         checklist: [
@@ -189,7 +189,7 @@ const DUMMY_PROJECTS = [
         lastUpdatedBy: 'Rasamune',
       },
       {
-        id: 'card5',
+        id: 'task1651076854481',
         title: 'Develop the Backend',
         details: 'The framework for the backend needs developing',
         checklist: [
@@ -222,7 +222,7 @@ const DUMMY_PROJECTS = [
         lastUpdatedBy: 'Rasamune',
       },
       {
-        id: 'card6',
+        id: 'task1651076862406',
         title: 'Develop the Backend',
         details: 'The framework for the backend needs developing',
         checklist: [
@@ -255,7 +255,7 @@ const DUMMY_PROJECTS = [
         lastUpdatedBy: 'Rasamune',
       },
       {
-        id: 'card7',
+        id: 'task1651076869165',
         title: 'Develop the Backend',
         details: 'The framework for the backend needs developing',
         checklist: [
@@ -288,7 +288,7 @@ const DUMMY_PROJECTS = [
         lastUpdatedBy: 'Rasamune',
       },
       {
-        id: 'card8',
+        id: 'task1651076876615',
         title: 'Develop the Backend',
         details: 'The framework for the backend needs developing',
         checklist: [
@@ -323,7 +323,7 @@ const DUMMY_PROJECTS = [
     ],
   },
   {
-    id: 'p2',
+    id: 'project1651076882502',
     title: 'Second Project',
     tasks: [],
   },
@@ -342,7 +342,7 @@ const MainView = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const updateProjects = incomingProject => {
+  const updateProjectsHandler = incomingProject => {
     const projectIndex = projects.findIndex(
       proj => proj.id === incomingProject.id
     );
@@ -366,9 +366,20 @@ const MainView = () => {
       tasks: [],
     });
     setProjects(projectsToUpdate);
-    window.localStorage.setItem('projects', JSON.stringify(projectsToUpdate));
+    updateLocalStorageHandler(projectsToUpdate);
+    // window.localStorage.setItem('projects', JSON.stringify(projectsToUpdate));
 
     navigate(`/project/${newId}`);
+  };
+
+  const deleteProjectHandler = incomingProject => {
+    const projectsToUpdate = [...projects];
+    const projectIndex = projects.findIndex(
+      project => incomingProject.id === project.id
+    );
+    projectsToUpdate.splice(projectIndex, 1);
+    setProjects(projectsToUpdate);
+    updateLocalStorageHandler(projectsToUpdate);
   };
 
   return (
@@ -389,7 +400,11 @@ const MainView = () => {
         <Route
           path="/project/:projectId/*"
           element={
-            <ProjectView projects={projects} onUpdateProject={updateProjects} />
+            <ProjectView
+              projects={projects}
+              onUpdateProject={updateProjectsHandler}
+              onDeleteProject={deleteProjectHandler}
+            />
           }
         />
       </Routes>

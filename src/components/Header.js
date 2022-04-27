@@ -8,6 +8,21 @@ const Header = () => {
         <div className={classes.title}>
           <Link to="/">ProManager</Link>
         </div>
+        {/* <div className={classes.nav}>
+          <ul>
+            <li>
+              <NavLink
+                className={navData => (navData.isActive ? classes.active : '')}
+                to="/"
+              >
+                Projects
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/logout/">Logout</NavLink>
+            </li>
+          </ul>
+        </div> */}
       </div>
     </header>
   );

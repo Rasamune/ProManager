@@ -23,7 +23,7 @@
 .task-container .confirmdelete {
   font-size: 1em;
   float: right;
-  margin: 1.15rem 3rem 0;
+  margin: 1.15rem 1rem 0;
 }
 
 .task-container .confirmdelete div {
@@ -337,5 +337,9 @@
 @media (max-width: 30em) {
   .task-view {
     grid-template-columns: 1fr;
+  }
+  .task-container {
+    margin-right: 0;
+    border-bottom: 1px solid lightgray;
   }
 }

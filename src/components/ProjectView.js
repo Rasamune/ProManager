@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Routes,
   Route,
@@ -7,6 +7,7 @@ import {
   Navigate,
   useParams,
   useMatch,
+  Link,
 } from 'react-router-dom';
 import TaskListFilter from './TaskListFilter';
 import TaskList from './TaskList';
@@ -18,6 +19,7 @@ const ProjectView = props => {
   const navigate = useNavigate();
   const location = useLocation();
   const matchPath = useMatch(location.pathname);
+  const searchBarRef = useRef();
   const projects = props.projects;
   const { projectId } = useParams();
   const project = projects.find(project => project.id === projectId);
@@ -26,6 +28,7 @@ const ProjectView = props => {
     editting: false,
     value: '',
   });
+  const [deletingProject, setDeletingProject] = useState(false);
   const [filters, setFilters] = useState({
     time: {
       value: 'new',
@@ -42,6 +45,9 @@ const ProjectView = props => {
     view: {
       value: 'expand',
       name: 'Expanded',
+    },
+    search: {
+      value: '',
     },
   });
 
@@ -139,10 +145,10 @@ const ProjectView = props => {
   const editInputHandler = e => {
     let value = e.target.textContent;
 
-    setEditProjectTitle(prevState => ({
+    setEditProjectTitle({
       editting: true,
       value: value,
-    }));
+    });
   };
 
   const inputBlurHandler = e => {
@@ -184,8 +190,43 @@ const ProjectView = props => {
     props.onUpdateProject(updatedProject);
   };
 
+  const searchHandler = e => {
+    if (e.key === 'Enter' || e.target.dataset.search === 'search') {
+      const value = searchBarRef.current.value;
+      setFilters(prevState => ({
+        ...prevState,
+        search: {
+          value,
+        },
+      }));
+      searchBarRef.current.value = '';
+    }
+  };
+
+  const removeSearchResultsHandler = () => {
+    setFilters(prevState => ({
+      ...prevState,
+      search: {
+        value: '',
+      },
+    }));
+  };
+
+  const deleteProjectVerifyHandler = () => {
+    setDeletingProject(true);
+  };
+
+  const deleteProjectHandler = () => {
+    setDeletingProject(false);
+    props.onDeleteProject(project);
+  };
+
+  const deleteProjectCancelHandler = () => {
+    setDeletingProject(false);
+  };
+
   useEffect(() => {
-    if (!project) navigate('/');
+    if (!project) navigate('/', { replace: true });
     if (project) setProjectTasks(project.tasks);
   }, [project, navigate]);
 
@@ -193,6 +234,34 @@ const ProjectView = props => {
     <section>
       {project && (
         <>
+          <div className={classes.mininav}>
+            <div className={classes.navigator}>
+              <ul>
+                <li>
+                  <Link to="/">Projects</Link>
+                </li>
+                <li>
+                  <Link to={`/project/${project.id}`}>{project.title}</Link>
+                </li>
+              </ul>
+            </div>
+            {matchPath.pathnameBase === `/project/${project.id}` && (
+              <div className={classes.searchbar}>
+                <input
+                  className={classes.searchInput}
+                  onKeyDown={searchHandler}
+                  ref={searchBarRef}
+                />
+                <button
+                  className={classes.searchbutton}
+                  onClick={searchHandler}
+                  data-search="search"
+                >
+                  Search
+                </button>
+              </div>
+            )}
+          </div>
           <div className={classes.head}>
             {!editProjectTitle.editting && (
               <h1 onClick={editInputHandler}>{project.title}</h1>
@@ -208,14 +277,42 @@ const ProjectView = props => {
                 data-type="title"
               />
             )}
-            {matchPath.pathnameBase === `/project/${project.id}` && (
-              <button
-                className={classes['new-task']}
-                onClick={addNewTaskHandler}
-              >
-                + New Task
-              </button>
-            )}
+            <div className={classes['right-column']}>
+              {!deletingProject && (
+                <div
+                  className={classes['delete-project']}
+                  onClick={deleteProjectVerifyHandler}
+                >
+                  Delete Project
+                </div>
+              )}
+              {deletingProject && (
+                <div className={classes.confirmdelete}>
+                  <div
+                    className={classes.confirm}
+                    onClick={deleteProjectHandler}
+                  >
+                    Confirm Delete
+                  </div>
+                  <div
+                    className={classes.cancel}
+                    onClick={deleteProjectCancelHandler}
+                  >
+                    Cancel
+                  </div>
+                </div>
+              )}
+              {matchPath.pathnameBase === `/project/${project.id}` && (
+                <>
+                  <button
+                    className={classes['new-task']}
+                    onClick={addNewTaskHandler}
+                  >
+                    + New Task
+                  </button>
+                </>
+              )}
+            </div>
             <ProjectProgress tasks={projectTasks} />
           </div>
           {matchPath.pathnameBase === `/project/${project.id}` && (
@@ -224,6 +321,17 @@ const ProjectView = props => {
               onFilterChange={handleFilterChange}
             />
           )}
+          {matchPath.pathnameBase === `/project/${project.id}` &&
+            filters.search.value !== '' && (
+              <div className={classes['search-results-container']}>
+                <div
+                  className={classes.searchresults}
+                  onClick={removeSearchResultsHandler}
+                >
+                  Displaying results for: <span>{filters.search.value}</span>{' '}
+                </div>
+              </div>
+            )}
           <Routes>
             <Route
               path="/"
