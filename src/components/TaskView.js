@@ -418,13 +418,15 @@ const TaskView = props => {
                     task.checklist.map(item => (
                       <li
                         key={item.id}
+                        data-id={item.id}
                         className={item.completed ? classes.completed : ''}
+                        data-checked={item.completed}
+                        onClick={checklistClickHandler}
                       >
                         <span
                           data-id={item.id}
                           data-checked={item.completed}
                           className={`${classes.checkbox} listItem`}
-                          onClick={checklistClickHandler}
                         ></span>
                         {item.title}
                         <span
