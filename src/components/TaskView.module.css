@@ -285,21 +285,24 @@
 }
 
 .checklist li .remove {
-  display: none;
+  position: absolute;
+  right: -1.5rem;
+  top: -0.15rem;
+  display: inline-block;
   font-style: normal;
   font-weight: bold;
-  color: red;
+  color: lightgray;
   margin-left: 0.5rem;
   cursor: pointer;
+}
+
+.checklist li .remove:hover {
+  color: red;
 }
 
 .checklist .itemwarning {
   color: gray;
   font-style: italic;
-}
-
-.checklist li:hover .remove {
-  display: initial;
 }
 
 .tags ul {
