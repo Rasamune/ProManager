@@ -99,8 +99,12 @@
   cursor: pointer;
 }
 
+.mininav li a {
+  color: black;
+}
+
 .mininav li a:visited {
-  color: unset;
+  color: black;
 }
 
 .mininav li a:hover {
