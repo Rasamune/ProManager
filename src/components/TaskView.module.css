@@ -335,11 +335,33 @@
 }
 
 @media (max-width: 30em) {
-  .task-view {
-    grid-template-columns: 1fr;
-  }
   .task-container {
     margin-right: 0;
     border-bottom: 1px solid lightgray;
+  }
+  .task-view {
+    grid-template-columns: 1fr;
+  }
+  .task-view .task {
+    padding: 2rem 1rem 1rem;
+  }
+  .task-view .task h1 {
+    width: 100%;
+  }
+  .task-view .task input.title {
+    width: 100%;
+  }
+  .task-view .task .duedate {
+    position: absolute;
+    top: 0;
+    right: 0.5rem;
+  }
+  .task-view .task .duedate span {
+    position: relative;
+    bottom: 0;
+    margin-right: 0.5rem;
+  }
+  .checklist ul li .checkbox:hover {
+    transform: none;
   }
 }

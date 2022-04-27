@@ -63,14 +63,14 @@ const TaskView = props => {
         type: 'itemCompleted',
         details: task.checklist[itemIndex].title,
         date: new Date(),
-        changeBy: 'Rasamune',
+        changeBy: 'NewUser',
       };
     } else {
       changelogEntry = {
         type: 'itemUnchecked',
         details: task.checklist[itemIndex].title,
         date: new Date(),
-        changeBy: 'Rasamune',
+        changeBy: 'NewUser',
       };
     }
 
@@ -89,6 +89,11 @@ const TaskView = props => {
 
     if (type === 'checklist') value = [];
     if (type === 'tags') value = task.tags.join(' ');
+    if (type === 'title')
+      value = value === 'Click here to name the task' ? '' : value;
+    if (type === 'details')
+      value =
+        value === 'Click here to give the task a description' ? '' : value;
 
     setEditFields(prevState => ({
       ...prevState,
@@ -118,7 +123,7 @@ const TaskView = props => {
       type,
       details: value,
       date: new Date(),
-      changeBy: 'Rasamune',
+      changeBy: 'NewUser',
     };
     // If checklist update value input
     if (type === 'checklist') {
@@ -130,7 +135,7 @@ const TaskView = props => {
           type: 'taskAdd',
           details: value,
           date: new Date(),
-          changeBy: 'Rasamune',
+          changeBy: 'NewUser',
         };
         value = [
           ...task.checklist,
@@ -145,7 +150,7 @@ const TaskView = props => {
           type: 'taskAdd',
           details: value,
           date: new Date(),
-          changeBy: 'Rasamune',
+          changeBy: 'NewUser',
         };
         value = [
           {
@@ -176,14 +181,14 @@ const TaskView = props => {
           type,
           details: '<NO TAGS>',
           date: new Date(),
-          changeBy: 'Rasamune',
+          changeBy: 'NewUser',
         };
       } else {
         changelogEntry = {
           type,
           details: value.join(', '),
           date: new Date(),
-          changeBy: 'Rasamune',
+          changeBy: 'NewUser',
         };
       }
     }
@@ -268,7 +273,7 @@ const TaskView = props => {
           type: 'taskRemove',
           details: task.checklist[itemIndex].title,
           date: new Date(),
-          changeBy: 'Rasamune',
+          changeBy: 'NewUser',
         },
         ...task.changelog,
       ],

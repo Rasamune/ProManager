@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import useMobile from '../hooks/use-mobile';
 import classes from './TaskList.module.css';
 import TaskItem from './TaskItem';
 
@@ -10,7 +11,7 @@ const TaskList = props => {
     taskSecondColumn: [],
     taskThirdColumn: [],
   });
-  const isMobileView = window.innerWidth < 768;
+  const isMobileView = useMobile();
   const filters = props.filters;
 
   const checklistClickHandler = useCallback(

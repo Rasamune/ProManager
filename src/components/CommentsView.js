@@ -26,7 +26,7 @@ const CommentsView = props => {
       comments: [
         {
           id: newId,
-          createdBy: 'Catherine',
+          createdBy: 'Guest',
           datePosted: new Date(),
           comment: comment,
         },
@@ -35,6 +35,12 @@ const CommentsView = props => {
     };
     setAddingComment(false);
     props.onAddComment(updatedTask);
+  };
+
+  const keyDownHandler = e => {
+    if (e.key === 'Enter') {
+      addCommentHandler();
+    }
   };
 
   return (
@@ -48,6 +54,7 @@ const CommentsView = props => {
             defaultValue={''}
             data-type="details"
             ref={commentRef}
+            onKeyDown={keyDownHandler}
           />
           <div className={classes.postcomment}>
             <button className={classes.cancel} onClick={showCommentHandler}>

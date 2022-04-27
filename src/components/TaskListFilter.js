@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import useMobile from '../hooks/use-mobile';
 import classes from './TaskListFilter.module.css';
 
 const TaskListFilter = props => {
   const filters = props.filters;
   const [showFiltersMobile, setShowFiltersMobile] = useState('');
-  const isMobileView = window.innerWidth < 768;
+  const isMobileView = useMobile();
   const [dropdown, setDropdown] = useState({
     sort: false,
     progress: false,
@@ -38,7 +39,7 @@ const TaskListFilter = props => {
 
   const toggleVisiblityHandler = e => {
     if (showFiltersMobile === '') {
-      e.target.textContent = 'Close Sorting Filters';
+      e.target.textContent = 'Hide Sorting Filters';
       setShowFiltersMobile('show');
       return;
     }
