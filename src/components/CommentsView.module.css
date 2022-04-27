@@ -88,6 +88,7 @@
 @media (max-width: 30em) {
   .comments-container {
     margin: 0;
+    padding-bottom: 1rem;
     border-bottom: 1px solid lightgray;
   }
 }

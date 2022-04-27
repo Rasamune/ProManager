@@ -51,10 +51,19 @@
 }
 
 @media (max-width: 30em) {
+  .view-filters {
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid lightgray;
+  }
   .task-filter-container {
     grid-template-columns: 1fr;
+    display: none;
   }
-
+  .task-filter-container.show {
+    display: block;
+  }
   .sort .filterchoice {
     margin-right: 0;
     padding: 0.5rem 0.25rem;
