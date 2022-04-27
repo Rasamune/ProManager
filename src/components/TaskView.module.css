@@ -352,7 +352,10 @@
     width: 100%;
   }
   .task-view .task input.title {
-    width: 100%;
+    width: calc(100% - 1rem);
+  }
+  .task textarea.details {
+    width: calc(100% - 1rem);
   }
   .task-view .task .duedate {
     position: absolute;
