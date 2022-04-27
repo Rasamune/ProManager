@@ -16,6 +16,10 @@
   font-size: 2rem;
 }
 
+.header .title a {
+  color: white;
+}
+
 .header .title a:visited {
   color: white;
 }
