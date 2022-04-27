@@ -16,6 +16,10 @@
   font-size: 2rem;
 }
 
+.header .title a:visited {
+  color: white;
+}
+
 .header .nav {
   margin-left: auto;
 }

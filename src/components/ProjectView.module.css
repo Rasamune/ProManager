@@ -62,6 +62,11 @@
   -webkit-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
   box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
+  color: #47a8ff;
+}
+
+.head .new-task:visited {
+  color: #47a8ff;
 }
 
 .head input.title {
@@ -94,8 +99,12 @@
   cursor: pointer;
 }
 
+.mininav li a:visited {
+  color: unset;
+}
+
 .mininav li a:hover {
-  color: teal;
+  color: #47a8ff;
 }
 
 .mininav li:before {

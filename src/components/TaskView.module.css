@@ -343,7 +343,7 @@
     grid-template-columns: 1fr;
   }
   .task-view .task {
-    padding: 2rem 1rem 1rem;
+    padding: 2.5rem 1rem 1rem;
   }
   .task-view .task h1 {
     width: 100%;
@@ -353,8 +353,8 @@
   }
   .task-view .task .duedate {
     position: absolute;
-    top: 0;
-    right: 0.5rem;
+    top: 1rem;
+    right: 1rem;
   }
   .task-view .task .duedate span {
     position: relative;
@@ -363,5 +363,11 @@
   }
   .checklist ul li .checkbox:hover {
     transform: none;
+  }
+  .task.completed:after {
+    font-size: 1.25rem;
+  }
+  .task.inprogress:after {
+    font-size: 1.25rem;
   }
 }
