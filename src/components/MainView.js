@@ -323,7 +323,7 @@ const DUMMY_PROJECTS = [
     ],
   },
   {
-    id: 'project1651076882502',
+    id: 'p1651076882502',
     title: 'Second Project',
     tasks: [],
   },
@@ -358,7 +358,7 @@ const MainView = () => {
   };
 
   const addNewProjectHandler = () => {
-    const newId = `project${Date.now()}`;
+    const newId = `p${Date.now()}`;
     const projectsToUpdate = [...projects];
     projectsToUpdate.push({
       id: newId,

@@ -63,14 +63,14 @@ const TaskView = props => {
         type: 'itemCompleted',
         details: task.checklist[itemIndex].title,
         date: new Date(),
-        changeBy: 'NewUser',
+        changeBy: 'Guest',
       };
     } else {
       changelogEntry = {
         type: 'itemUnchecked',
         details: task.checklist[itemIndex].title,
         date: new Date(),
-        changeBy: 'NewUser',
+        changeBy: 'Guest',
       };
     }
 
@@ -123,7 +123,7 @@ const TaskView = props => {
       type,
       details: value,
       date: new Date(),
-      changeBy: 'NewUser',
+      changeBy: 'Guest',
     };
     // If checklist update value input
     if (type === 'checklist') {
@@ -135,7 +135,7 @@ const TaskView = props => {
           type: 'taskAdd',
           details: value,
           date: new Date(),
-          changeBy: 'NewUser',
+          changeBy: 'Guest',
         };
         value = [
           ...task.checklist,
@@ -150,7 +150,7 @@ const TaskView = props => {
           type: 'taskAdd',
           details: value,
           date: new Date(),
-          changeBy: 'NewUser',
+          changeBy: 'Guest',
         };
         value = [
           {
@@ -181,14 +181,14 @@ const TaskView = props => {
           type,
           details: '<NO TAGS>',
           date: new Date(),
-          changeBy: 'NewUser',
+          changeBy: 'Guest',
         };
       } else {
         changelogEntry = {
           type,
           details: value.join(', '),
           date: new Date(),
-          changeBy: 'NewUser',
+          changeBy: 'Guest',
         };
       }
     }
@@ -273,7 +273,7 @@ const TaskView = props => {
           type: 'taskRemove',
           details: task.checklist[itemIndex].title,
           date: new Date(),
-          changeBy: 'NewUser',
+          changeBy: 'Guest',
         },
         ...task.changelog,
       ],

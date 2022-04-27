@@ -143,7 +143,10 @@ const ProjectView = props => {
   };
 
   const editInputHandler = e => {
-    let value = e.target.textContent;
+    let value =
+      e.target.textContent === 'Click here to name project'
+        ? ''
+        : e.target.textContent;
 
     setEditProjectTitle({
       editting: true,
