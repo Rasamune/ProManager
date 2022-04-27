@@ -181,7 +181,7 @@
     max-width: 100%;
   }
   .head input.title {
-    width: calc(100% - 1rem);
+    width: calc(100% - 2rem);
   }
   .head .right-column {
     float: none;
