@@ -4,7 +4,6 @@ import {
   Route,
   useNavigate,
   useLocation,
-  Navigate,
   useParams,
   useMatch,
   Link,
@@ -346,18 +345,20 @@ const ProjectView = props => {
                 />
               }
             />
-            <Route
-              path="/:taskId"
-              element={
-                <TaskView
-                  tasks={projectTasks}
-                  onUpdateTask={updateTaskHandler}
-                  onDeleteTask={deleteTaskHandler}
-                  location={`/project/${project.id}`}
-                />
-              }
-            />
-            <Route path="*" element={<Navigate replace to="/" />} />
+
+            {projectTasks.length > 0 && (
+              <Route
+                path="/:taskId"
+                element={
+                  <TaskView
+                    tasks={projectTasks}
+                    onUpdateTask={updateTaskHandler}
+                    onDeleteTask={deleteTaskHandler}
+                    location={`/project/${project.id}`}
+                  />
+                }
+              />
+            )}
           </Routes>
         </>
       )}

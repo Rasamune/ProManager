@@ -113,9 +113,9 @@ const DUMMY_PROJECTS = [
             changeBy: 'ProManager',
           },
         ],
-        dateCreated: '2022-04-12',
-        dateUpdated: '2022-04-24',
-        dueDate: '2022-05-01',
+        dateCreated: new Date('2022-04-12'),
+        dateUpdated: new Date('2022-04-24'),
+        dueDate: new Date('2022-05-01'),
         progress: 0,
         priority: 'low',
         status: 'inprogress',
@@ -186,9 +186,9 @@ const DUMMY_PROJECTS = [
             changeBy: 'ProManager',
           },
         ],
-        dateCreated: '2022-04-13',
-        dateUpdated: '2022-04-23',
-        dueDate: '2022-05-01',
+        dateCreated: new Date('2022-04-13'),
+        dateUpdated: new Date('2022-04-23'),
+        dueDate: new Date('2022-05-01'),
         progress: 0,
         priority: 'low',
         status: 'completed',
@@ -276,9 +276,9 @@ const DUMMY_PROJECTS = [
             changeBy: 'ProManager',
           },
         ],
-        dateCreated: '2022-04-15',
-        dateUpdated: '2022-04-15',
-        dueDate: '2022-05-20',
+        dateCreated: new Date('2022-04-15'),
+        dateUpdated: new Date('2022-04-15'),
+        dueDate: new Date('2022-05-20'),
         progress: 0,
         priority: 'medium',
         status: 'new',
@@ -354,9 +354,9 @@ const DUMMY_PROJECTS = [
             changeBy: 'ProManager',
           },
         ],
-        dateCreated: '2022-04-16',
-        dateUpdated: '2022-04-16',
-        dueDate: '2022-04-20',
+        dateCreated: new Date('2022-04-16'),
+        dateUpdated: new Date('2022-04-16'),
+        dueDate: new Date('2022-04-20'),
         progress: 0,
         priority: 'high',
         status: 'new',
@@ -366,7 +366,7 @@ const DUMMY_PROJECTS = [
       },
       {
         id: 'task1651076854481',
-        title: 'Add Authenticationd',
+        title: 'Add Authentication',
         details:
           'Application needs authentication and a way for users to log in and out.',
         checklist: [
@@ -441,9 +441,9 @@ const DUMMY_PROJECTS = [
             changeBy: 'ProManager',
           },
         ],
-        dateCreated: '2022-04-17',
-        dateUpdated: '2022-04-22',
-        dueDate: '2022-05-02',
+        dateCreated: new Date('2022-04-17'),
+        dateUpdated: new Date('2022-04-22'),
+        dueDate: new Date('2022-05-02'),
         progress: 0,
         priority: 'high',
         status: 'inprogress',
@@ -478,9 +478,9 @@ const DUMMY_PROJECTS = [
             completed: true,
           },
         ],
-        dateCreated: '2022-04-19',
+        dateCreated: new Date('2022-04-19'),
         dateUpdated: new Date(),
-        dueDate: '2022-05-01',
+        dueDate: new Date('2022-05-01'),
         comments: [
           {
             id: 'comment1651076819112',
@@ -630,7 +630,6 @@ const MainView = () => {
     });
     setProjects(projectsToUpdate);
     updateLocalStorageHandler(projectsToUpdate);
-    // window.localStorage.setItem('projects', JSON.stringify(projectsToUpdate));
 
     navigate(`/project/${newId}`);
   };

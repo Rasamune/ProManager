@@ -38,6 +38,7 @@ const TaskItem = props => {
     const updatedTask = {
       ...task,
       changelog: [changelogEntry, ...task.changelog],
+      lastUpdatedBy: 'Guest',
     };
     updatedTask.checklist[itemIndex].completed = checked;
 

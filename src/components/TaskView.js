@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTimestamp, useDateFormat } from '../hooks/use-timestamp';
+import useMobile from '../hooks/use-mobile';
 import CommentsView from './CommentsView';
 import ChangelogView from './ChangelogView';
 import classes from './TaskView.module.css';
@@ -12,7 +13,7 @@ const TaskView = props => {
   const task = projectTasks.find(task => task.id === taskId);
   const timestamp = useTimestamp;
   const formatDate = useDateFormat;
-  const isMobileView = window.innerWidth < 768;
+  const isMobileView = useMobile();
 
   const [editFields, setEditFields] = useState({
     title: {
@@ -77,6 +78,7 @@ const TaskView = props => {
     const updatedTask = {
       ...task,
       changelog: [changelogEntry, ...task.changelog],
+      lastUpdatedBy: 'Guest',
     };
     updatedTask.checklist[itemIndex].completed = checked;
 
@@ -205,6 +207,7 @@ const TaskView = props => {
       ...task,
       [type]: value,
       changelog: [changelogEntry, ...task.changelog],
+      lastUpdatedBy: 'Guest',
     };
 
     props.onUpdateTask(updatedTask);
@@ -275,6 +278,7 @@ const TaskView = props => {
         },
         ...task.changelog,
       ],
+      lastUpdatedBy: 'Guest',
     };
     updatedTask.checklist.splice(itemIndex, 1);
 
@@ -416,15 +420,13 @@ const TaskView = props => {
                     task.checklist.map(item => (
                       <li
                         key={item.id}
-                        data-id={item.id}
                         className={item.completed ? classes.completed : ''}
-                        data-checked={item.completed}
-                        onClick={checklistClickHandler}
                       >
                         <span
                           data-id={item.id}
                           data-checked={item.completed}
                           className={`${classes.checkbox} listItem`}
+                          onClick={checklistClickHandler}
                         ></span>
                         {item.title}
                         <span
@@ -461,7 +463,7 @@ const TaskView = props => {
                   )}
                   {task.checklist.length === 0 && (
                     <li className={classes.itemwarning}>
-                      * Add Item to start tracking progress
+                      * Add Checklist Item to start tracking progress
                     </li>
                   )}
                 </ul>
