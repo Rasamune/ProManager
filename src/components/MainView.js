@@ -480,7 +480,7 @@ const DUMMY_PROJECTS = [
         ],
         dateCreated: new Date('2022-04-19'),
         dateUpdated: new Date(),
-        dueDate: new Date('2022-04-31'),
+        dueDate: new Date('2022-04-28T13:00:00.000Z'),
         comments: [
           {
             id: 'comment1651076819112',
@@ -549,7 +549,7 @@ const DUMMY_PROJECTS = [
           {
             id: 'change1651076819118',
             type: 'dueDate',
-            details: '2022-04-31',
+            details: '2022-04-28T13:00:00.000Z',
             date: '2022-04-19',
             changeBy: 'ProManager',
           },
