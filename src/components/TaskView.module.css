@@ -351,6 +351,9 @@
   .task textarea.details {
     width: calc(100% - 1rem);
   }
+  .task input.addingtag {
+    width: calc(100% - 1rem);
+  }
   .task-view .task .duedate {
     position: absolute;
     top: 1rem;
