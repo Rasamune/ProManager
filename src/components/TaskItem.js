@@ -24,14 +24,14 @@ const TaskItem = props => {
         type: 'itemCompleted',
         details: task.checklist[itemIndex].title,
         date: new Date(),
-        changeBy: 'Rasamune',
+        changeBy: 'Guest',
       };
     } else {
       changelogEntry = {
         type: 'itemUnchecked',
         details: task.checklist[itemIndex].title,
         date: new Date(),
-        changeBy: 'Rasamune',
+        changeBy: 'Guest',
       };
     }
 

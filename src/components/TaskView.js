@@ -128,9 +128,7 @@ const TaskView = props => {
     // If checklist update value input
     if (type === 'checklist') {
       if (task.checklist.length > 0) {
-        const newId = `check${
-          +task.checklist[task.checklist.length - 1].id.slice(-1) + 1
-        }`;
+        const newId = `check${Date.now()}`;
         changelogEntry = {
           type: 'taskAdd',
           details: value,
