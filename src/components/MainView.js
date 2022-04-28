@@ -86,7 +86,7 @@ const DUMMY_PROJECTS = [
           {
             id: 'change1651076819118',
             type: 'dueDate',
-            details: '2022-04-31',
+            details: '2022-5-1',
             date: '2022-04-12',
             changeBy: 'ProManager',
           },
@@ -115,7 +115,7 @@ const DUMMY_PROJECTS = [
         ],
         dateCreated: new Date('2022-04-12'),
         dateUpdated: new Date('2022-04-24'),
-        dueDate: new Date('2022-05-01'),
+        dueDate: new Date('2022-5-1'),
         progress: 0,
         priority: 'low',
         status: 'inprogress',
@@ -160,7 +160,7 @@ const DUMMY_PROJECTS = [
           {
             id: 'change1651076819118',
             type: 'dueDate',
-            details: '2022-04-31',
+            details: '2022-5-1',
             date: '2022-04-13',
             changeBy: 'ProManager',
           },
@@ -188,7 +188,7 @@ const DUMMY_PROJECTS = [
         ],
         dateCreated: new Date('2022-04-13'),
         dateUpdated: new Date('2022-04-23'),
-        dueDate: new Date('2022-05-01'),
+        dueDate: new Date('2022-5-1'),
         progress: 0,
         priority: 'low',
         status: 'completed',
@@ -250,7 +250,7 @@ const DUMMY_PROJECTS = [
           {
             id: 'change1651076819118',
             type: 'dueDate',
-            details: '2022-05-20',
+            details: '2022-5-20',
             date: '2022-04-15',
             changeBy: 'ProManager',
           },
@@ -278,7 +278,7 @@ const DUMMY_PROJECTS = [
         ],
         dateCreated: new Date('2022-04-15'),
         dateUpdated: new Date('2022-04-15'),
-        dueDate: new Date('2022-05-20'),
+        dueDate: new Date('2022-5-20'),
         progress: 0,
         priority: 'medium',
         status: 'new',
@@ -414,7 +414,7 @@ const DUMMY_PROJECTS = [
           {
             id: 'change1651076819118',
             type: 'dueDate',
-            details: '2022-05-02',
+            details: '2022-5-02',
             date: '2022-04-17',
             changeBy: 'ProManager',
           },
@@ -443,7 +443,7 @@ const DUMMY_PROJECTS = [
         ],
         dateCreated: new Date('2022-04-17'),
         dateUpdated: new Date('2022-04-22'),
-        dueDate: new Date('2022-05-02'),
+        dueDate: new Date('2022-5-02'),
         progress: 0,
         priority: 'high',
         status: 'inprogress',
@@ -480,7 +480,7 @@ const DUMMY_PROJECTS = [
         ],
         dateCreated: new Date('2022-04-19'),
         dateUpdated: new Date(),
-        dueDate: new Date('2022-05-01'),
+        dueDate: new Date('2022-04-31'),
         comments: [
           {
             id: 'comment1651076819112',
@@ -591,6 +591,8 @@ const DUMMY_PROJECTS = [
     tasks: [],
   },
 ];
+
+console.log(DUMMY_PROJECTS);
 
 const getLocalStorage = () => {
   const savedProjects = window.localStorage.getItem('projects');
