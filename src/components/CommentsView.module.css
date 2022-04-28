@@ -89,6 +89,6 @@
     border-bottom: 1px solid lightgray;
   }
   .comments-container textarea {
-    width: calc(100% - 2rem);
+    width: calc(100% - 1rem);
   }
 }
