@@ -195,6 +195,13 @@ const TaskView = props => {
     // If date update value input
     if (type === 'dueDate') {
       value = new Date(value);
+      value.setDate(value.getDate() + 1);
+      changelogEntry = {
+        type,
+        details: value,
+        date: new Date(),
+        changeBy: 'Guest',
+      };
     }
     setEditFields(prevState => ({
       ...prevState,

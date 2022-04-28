@@ -592,8 +592,6 @@ const DUMMY_PROJECTS = [
   },
 ];
 
-console.log(DUMMY_PROJECTS);
-
 const getLocalStorage = () => {
   const savedProjects = window.localStorage.getItem('projects');
   if (savedProjects) {

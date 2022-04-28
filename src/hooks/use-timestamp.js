@@ -40,9 +40,9 @@ export const useDateFormat = date => {
     'November',
     'December',
   ];
-  let dateString = `${months[newDate.getMonth()]} ${
-    newDate.getDate() + 1
-  }, ${newDate.getFullYear()}`;
+  let dateString = `${
+    months[newDate.getMonth()]
+  } ${newDate.getDate()}, ${newDate.getFullYear()}`;
 
   return dateString;
 };
