@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { ReactComponent as Logo } from '../img/ProManagerLogo.svg';
 import classes from './Header.module.css';
 
 const Header = () => {
@@ -6,23 +7,11 @@ const Header = () => {
     <header className={classes.header}>
       <div className={classes.wrap}>
         <div className={classes.title}>
-          <Link to="/">ProManager</Link>
+          <Link to="/">
+            <Logo className={classes.logo} />
+            ProManager
+          </Link>
         </div>
-        {/* <div className={classes.nav}>
-          <ul>
-            <li>
-              <NavLink
-                className={navData => (navData.isActive ? classes.active : '')}
-                to="/"
-              >
-                Projects
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/logout/">Logout</NavLink>
-            </li>
-          </ul>
-        </div> */}
       </div>
     </header>
   );

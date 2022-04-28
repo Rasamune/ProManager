@@ -2,6 +2,12 @@
   background-color: #020910;
 }
 
+.header .logo {
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-right: 0.5rem;
+}
+
 .wrap {
   display: flex;
   max-width: 1200px;
