@@ -86,7 +86,7 @@ const DUMMY_PROJECTS = [
           {
             id: 'change1651076819118',
             type: 'dueDate',
-            details: '2022-5-1',
+            details: '2022-05-01T13:00:00.000Z',
             date: '2022-04-12',
             changeBy: 'ProManager',
           },
@@ -115,7 +115,7 @@ const DUMMY_PROJECTS = [
         ],
         dateCreated: new Date('2022-04-12'),
         dateUpdated: new Date('2022-04-24'),
-        dueDate: new Date('2022-5-1'),
+        dueDate: new Date('2022-05-01T13:00:00.000Z'),
         progress: 0,
         priority: 'low',
         status: 'inprogress',
