@@ -141,7 +141,7 @@ const ProjectView = props => {
     }));
   };
 
-  const editInputHandler = e => {
+  /*const editInputHandler = e => {
     let value =
       e.target.value === 'Click here to name project'
         ? ''
@@ -151,7 +151,7 @@ const ProjectView = props => {
       editting: true,
       value: value,
     });
-  };
+  };*/
 
   const inputBlurHandler = e => {
     const value = e.target.value;
