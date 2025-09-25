@@ -2,6 +2,7 @@
   border-bottom: 1px solid lightgray;
 }
 
+/*
 .head h1 {
   max-width: 60%;
   display: inline-block;
@@ -11,6 +12,27 @@
 
 .head h1:hover {
   outline: 1px solid lightgray;
+}*/
+
+.head input {
+  max-width: 60%;
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0.35rem 0 0;
+  background-color: #f0f0f0;
+  outline: none;
+  border: none;
+}
+
+.head input:hover {
+  outline: 1px solid lightgray;
+  background-color: white;
+}
+
+.head input:focus {
+  outline: 2px solid #000;
+  background-color: white;
 }
 
 .head ul {
@@ -174,11 +196,11 @@
 }
 
 @media (max-width: 30em) {
-  .head h1 {
+  .head input {
     max-width: 100%;
   }
   .head input.title {
-    width: calc(100% - 2rem);
+    width: calc(100% - 0.25rem);
   }
   .head .right-column {
     float: none;

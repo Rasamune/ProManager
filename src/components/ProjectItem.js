@@ -30,11 +30,18 @@ const ProjectItem = props => {
   };
 
   return (
-    <div className={classes['project-item']} onClick={onClickHandler}>
+    <a
+      className={classes['project-item']}
+      href={`/project/${props.project.id}`}
+      onClick={e => {
+        e.preventDefault();
+        onClickHandler();
+      }}
+    >
       <h1>{props.project.title}</h1>
       <div className={classes.progressamount}>{getProgressPercentage()}</div>
       <ProjectProgress tasks={props.project.tasks} />
-    </div>
+    </a>
   );
 };
 

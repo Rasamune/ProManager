@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTimestamp, useDateFormat } from '../hooks/use-timestamp';
 import useMobile from '../hooks/use-mobile';
@@ -292,6 +292,39 @@ const TaskView = props => {
     props.onUpdateTask(updatedTask);
   };
 
+  const AutoResizeTextarea = ({
+    value,
+    onChange,
+    onBlur,
+    onKeyDown,
+    className,
+    rows = 1,
+    ...props
+  }) => {
+    const textareaRef = useRef();
+
+    useEffect(() => {
+      if (textareaRef.current) {
+        textareaRef.current.style.height = 'auto';
+        textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+      }
+    }, [value]);
+
+    return (
+      <textarea
+        ref={textareaRef}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        onKeyDown={onKeyDown}
+        className={className}
+        rows={rows}
+        style={{ resize: 'none', overflow: 'hidden' }}
+        {...props}
+      />
+    );
+  };
+
   const deleteTaskVerifyHandler = () => {
     setEditFields(prevState => ({
       ...prevState,
@@ -333,26 +366,26 @@ const TaskView = props => {
       {task && (
         <>
           <div className={classes['task-container']}>
-            <h1 onClick={backClickHandler}>{`< Back`}</h1>
+            <button className={classes.back} onClick={backClickHandler}>{`< Back`}</button>
             {!editFields.deleteTask.editting && (
-              <div
+              <button
                 className={classes['delete-task']}
                 onClick={deleteTaskVerifyHandler}
               >
                 Delete Task
-              </div>
+              </button>
             )}
             {editFields.deleteTask.editting && (
               <div className={classes.confirmdelete}>
-                <div className={classes.confirm} onClick={deleteTaskHandler}>
+                <button className={classes.confirm} onClick={deleteTaskHandler}>
                   Confirm Delete
-                </div>
-                <div
+                </button>
+                <button
                   className={classes.cancel}
                   onClick={deleteTaskCancelHandler}
                 >
                   Cancel
-                </div>
+                </button>
               </div>
             )}
             <div
@@ -373,9 +406,14 @@ const TaskView = props => {
                   />
                 )}
                 {!editFields.title.editting && (
-                  <h1 onClick={editInputHandler} data-type="title">
-                    {task.title}
-                  </h1>
+                  <AutoResizeTextarea     
+                    value={task.title}
+                    onClick={editInputHandler}
+                    onFocus={editInputHandler}
+                    data-type="title"
+                    className={classes.title}
+                    readOnly
+                  />
                 )}
                 {editFields.dueDate.editting && (
                   <input
@@ -393,6 +431,11 @@ const TaskView = props => {
                     className={classes.duedate}
                     onClick={editInputHandler}
                     data-type="dueDate"
+                    tabIndex={0}
+                    role="button"
+                    onKeyDown={e => {
+                      if (e.key === 'Enter' || e.key === ' ') editInputHandler(e);
+                    }}
                   >
                     <span className={classes.title}>DUE DATE</span>
                     {formatDate(task.dueDate)}
@@ -413,13 +456,14 @@ const TaskView = props => {
                 />
               )}
               {!editFields.details.editting && (
-                <p
+                <AutoResizeTextarea
+                  value={task.details}
                   onClick={editInputHandler}
+                  onFocus={editInputHandler}
                   data-type="details"
                   className={classes.details}
-                >
-                  {task.details}
-                </p>
+                  readOnly
+                />
               )}
               <div className={classes.checklist}>
                 <ul>
@@ -429,19 +473,15 @@ const TaskView = props => {
                         key={item.id}
                         className={item.completed ? classes.completed : ''}
                       >
-                        <span
+                        <button
                           data-id={item.id}
                           data-checked={item.completed}
                           className={`${classes.checkbox} listItem`}
-                          onClick={checklistClickHandler}
-                        ></span>
+                          onClick={checklistClickHandler} 
+                        ></button>
                         {item.title}
-                        <span
-                          data-id={item.id}
-                          className={classes.remove}
-                          onClick={removeItemHandler}
-                        >
-                          x
+                        <span className={classes.remove}>
+                          <button data-id={item.id} onClick={removeItemHandler}>x</button>
                         </span>
                       </li>
                     ))}
@@ -459,14 +499,14 @@ const TaskView = props => {
                     </li>
                   )}
                   {!editFields.checklist.editting && (
-                    <li
+                    <button
                       key="add-item"
                       className={classes.addtask}
                       data-type="checklist"
                       onClick={editInputHandler}
                     >
                       + Add Item
-                    </li>
+                    </button>
                   )}
                   {task.checklist.length === 0 && (
                     <li className={classes.itemwarning}>
@@ -494,14 +534,14 @@ const TaskView = props => {
                         task.tags.map((tag, index) => (
                           <li key={`tag-${index + 1}`}>{tag}</li>
                         ))}
-                      <li
+                      <button
                         key="add-tag"
                         className={classes.addtag}
                         onClick={editInputHandler}
                         data-type="tags"
                       >
                         Add Tags +
-                      </li>
+                      </button>
                     </ul>
                   </>
                 )}
@@ -509,7 +549,7 @@ const TaskView = props => {
               <div className={classes.footer}>
                 <div className={classes['priority-container']}>
                   {!editFields.priority.editting && (
-                    <div
+                    <button
                       className={`${classes.priority} ${
                         classes[task.priority]
                       }`}
@@ -517,7 +557,7 @@ const TaskView = props => {
                       data-value={task.priority}
                     >
                       {task.priority} priority
-                    </div>
+                    </button>
                   )}
                   {editFields.priority.editting && (
                     <div
@@ -526,26 +566,35 @@ const TaskView = props => {
                       onMouseLeave={cancelPriorityUpdateHandler}
                     >
                       <ul>
-                        <li
-                          className={classes.low}
-                          data-type={'priority'}
-                          data-value="low"
-                        >
-                          low priority
+                        <li>
+                          <button
+                            className={classes.low}
+                            data-type="priority"
+                            data-value="low"
+                            onClick={updatePriorityHandler}
+                          >
+                            low priority
+                          </button>
                         </li>
-                        <li
-                          className={classes.medium}
-                          data-type={'priority'}
-                          data-value="medium"
-                        >
-                          medium priority
+                        <li>
+                          <button
+                            className={classes.medium}
+                            data-type="priority"
+                            data-value="medium"
+                            onClick={updatePriorityHandler}
+                          >
+                            medium priority
+                          </button>
                         </li>
-                        <li
-                          className={classes.high}
-                          data-type={'priority'}
-                          data-value="high"
-                        >
-                          high priority
+                        <li>
+                          <button
+                            className={classes.high}
+                            data-type="priority"
+                            data-value="high"
+                            onClick={updatePriorityHandler}
+                          >
+                            high priority
+                          </button>
                         </li>
                       </ul>
                     </div>

@@ -1,18 +1,20 @@
 .task {
   position: relative;
   display: inline-block;
-  width: calc(90% - 0.5rem);
+  width: 100%;
   padding: 5% 5% 0 5%;
   /* max-height: 200px; */
   overflow: hidden;
   border: 1px lightgrey solid;
   border-left: 0.5rem solid lightgray;
   border-radius: 10px;
+  text-align: left;
   background-color: white;
   -webkit-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
   box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
   cursor: pointer;
+  margin-bottom: 5px;
 }
 
 .task h1 {

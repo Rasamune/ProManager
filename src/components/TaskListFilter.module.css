@@ -8,6 +8,11 @@
   display: flex;
 }
 
+.sort .filterwrapper {
+  position: relative;
+  width: 100%;
+}
+
 .sort label {
   width: 35%;
   padding: 0.25rem;
@@ -15,12 +20,17 @@
 
 .sort .filterchoice {
   position: relative;
-  width: 100%;
+  width: 90%;
   background-color: white;
   padding: 0.25rem;
   margin-right: 1rem;
   cursor: pointer;
   outline: 1px lightgray solid;
+}
+
+.sort .filterchoice:focus {
+  outline: 2px solid #000; /* or any color that stands out */
+  outline-offset: 2px;
 }
 
 .sort .filterchoice.selected {
@@ -33,7 +43,7 @@
   top: 1.8rem;
   z-index: 1;
   background-color: white;
-  width: 100%;
+  width: 90%;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -42,11 +52,13 @@
   box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
 }
 
-.sort .filterlist li {
+.sort .filterlist button {
+  width: 100%;
+  cursor: pointer;
   padding: 0.25rem 0.5rem;
 }
 
-.sort .filterlist li:hover {
+.sort .filterlist button:hover {
   background-color: lightblue;
 }
 

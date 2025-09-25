@@ -7,10 +7,12 @@
   margin-right: 2rem;
 }
 
-.task-container > h1 {
+.task-container .back {
   margin: 1rem 0;
   cursor: pointer;
   display: inline-block;
+  font-weight: 700;
+  font-size: 2rem;
 }
 
 .task-container .delete-task {
@@ -59,15 +61,25 @@
   box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.25);
 }
 
-.task h1 {
+.task .task-header textarea {
   margin: 0;
   width: 70%;
   display: inline-block;
+  font-weight: bold;
+  font-size: 1.7rem;
+  resize: none;
+  overflow: hidden;
+  min-height: 2rem;
+  border: none;
 }
 
-.task h1:hover {
+.task .task-header textarea:hover {
   outline: 1px solid lightgray;
   cursor: text;
+}
+
+.task .task-header .title {
+  width: 70%;
 }
 
 .task .details:hover {
@@ -155,6 +167,7 @@
   padding: 0.15rem 0.5rem 0.25rem;
   border-radius: 10px;
   cursor: pointer;
+  background-color: transparent;
 }
 
 .task .priority-container .low {
@@ -189,24 +202,32 @@
 
 .priority-container .priority-dropdown ul li {
   display: inline-block;
+  
+}
+
+.priority-container .priority-dropdown ul li button {
   font-size: 0.75rem;
   padding: 0.15rem 0.5rem 0.25rem;
   border-radius: 10px;
   margin-right: 0.15rem;
   cursor: pointer;
+  background-color: transparent;
 }
 
-.priority-container .priority-dropdown ul li.low:hover {
+.priority-container .priority-dropdown ul li button.low:hover,
+.priority-container .priority-dropdown ul li button.low:focus {
   background-color: gray;
   color: white;
 }
 
-.priority-container .priority-dropdown ul li.medium:hover {
+.priority-container .priority-dropdown ul li button.medium:hover,
+.priority-container .priority-dropdown ul li button.medium:focus {
   background-color: orange;
   color: white;
 }
 
-.priority-container .priority-dropdown ul li.high:hover {
+.priority-container .priority-dropdown ul li button.high:hover,
+.priority-container .priority-dropdown ul li button.high:focus {
   background-color: orangered;
   color: white;
 }
@@ -225,9 +246,10 @@
 .task textarea.details {
   font-size: 1.05rem;
   width: 100%;
-  min-height: 6rem;
+  min-height: 1rem;
   margin-top: 1rem;
   resize: vertical;
+  border: none;
 }
 
 .task .checklist .addtask {
@@ -271,7 +293,7 @@
 }
 
 .checklist ul li.completed .checkbox {
-  background-color: black;
+  background-color: yellowgreen;
 }
 
 .checklist ul li .checkbox:hover {
@@ -284,13 +306,22 @@
   top: -0.15rem;
   display: inline-block;
   font-style: normal;
-  font-weight: bold;
-  color: lightgray;
+  
+  
   margin-left: 0.5rem;
   cursor: pointer;
+  background-color: none;
 }
 
-.checklist li .remove:hover {
+.checklist li .remove button {
+  cursor: pointer;
+  color: lightgray; 
+  font-weight: bold;
+  background: none;
+}
+
+.checklist li .remove button:hover,
+.checklist li .remove button:focus {
   color: red;
 }
 
@@ -314,14 +345,15 @@
   color: gray;
 }
 
-.tags li.addtag {
+.tags button.addtag {
   display: inline-block;
   margin: 0;
-  font-size: 0.75rem;
+  margin-top: 5px;
+  font-size: 0.8rem;
   border: 1px solid lightgray;
   color: gray;
   border-radius: 15px;
-  padding: 0.1rem 0.75rem 0.25rem;
+  padding: 0.1rem 0.75rem 0.1rem;
   cursor: pointer;
 }
 

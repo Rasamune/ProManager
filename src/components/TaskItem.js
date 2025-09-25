@@ -51,7 +51,7 @@ const TaskItem = props => {
   };
 
   return (
-    <div
+    <button
       className={`${classes.task} ${
         props.task.status === 'completed' ? classes.completed : ''
       } ${props.task.status === 'inprogress' ? classes.inprogress : ''}`}
@@ -87,7 +87,7 @@ const TaskItem = props => {
         </div>
         <p>Updated {timeStamp}</p>
       </div>
-    </div>
+    </button>
   );
 };
 

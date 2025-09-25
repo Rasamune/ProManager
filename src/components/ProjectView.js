@@ -143,9 +143,9 @@ const ProjectView = props => {
 
   const editInputHandler = e => {
     let value =
-      e.target.textContent === 'Click here to name project'
+      e.target.value === 'Click here to name project'
         ? ''
-        : e.target.textContent;
+        : e.target.value;
 
     setEditProjectTitle({
       editting: true,
@@ -265,28 +265,23 @@ const ProjectView = props => {
             )}
           </div>
           <div className={classes.head}>
-            {!editProjectTitle.editting && (
-              <h1 onClick={editInputHandler}>{project.title}</h1>
-            )}
-            {editProjectTitle.editting && (
-              <input
-                autoFocus
-                className={classes.title}
-                type="text"
-                defaultValue={editProjectTitle.value}
-                onBlur={inputBlurHandler}
-                onKeyDown={inputEnterKeyHandler}
-                data-type="title"
-              />
-            )}
+            
+            <input
+              className={classes.title}
+              type="text"
+              defaultValue={project.title}
+              onBlur={inputBlurHandler}
+              onKeyDown={inputEnterKeyHandler}
+              data-type="title"
+            />
             <div className={classes['right-column']}>
               {!deletingProject && (
-                <div
+                <button
                   className={classes['delete-project']}
                   onClick={deleteProjectVerifyHandler}
                 >
                   Delete Project
-                </div>
+                </button>
               )}
               {deletingProject && (
                 <div className={classes.confirmdelete}>
@@ -326,12 +321,12 @@ const ProjectView = props => {
           {matchPath.pathnameBase === `/project/${project.id}` &&
             filters.search.value !== '' && (
               <div className={classes['search-results-container']}>
-                <div
+                <button
                   className={classes.searchresults}
                   onClick={removeSearchResultsHandler}
                 >
                   Displaying results for: <span>{filters.search.value}</span>{' '}
-                </div>
+                </button>
               </div>
             )}
           <Routes>

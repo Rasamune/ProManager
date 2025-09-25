@@ -7,14 +7,17 @@
 }
 
 .comments-container .addcomment {
-  background-color: #fffacd;
-  text-align: center;
-  border-radius: 10px;
-  cursor: pointer;
+  width: 100%;
 }
 
-.comments-container .addcomment p {
+.comments-container .addcomment button {
+  width: 100%;
   padding: 0.75rem;
+  background-color: transparent;
+  background-color: #fffacd;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 10px;
 }
 
 .comments-container .postcomment {

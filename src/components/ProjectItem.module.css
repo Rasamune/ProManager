@@ -15,6 +15,10 @@
   cursor: pointer;
 }
 
+a.project-item {
+  color: black;
+}
+
 .project-item h1 {
   max-width: 80%;
   display: inline-block;

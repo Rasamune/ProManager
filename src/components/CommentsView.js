@@ -67,8 +67,8 @@ const CommentsView = props => {
         </>
       )}
       {!addingComment && (
-        <div className={classes.addcomment} onClick={showCommentHandler}>
-          <p>Add Comment +</p>
+        <div className={classes.addcomment}>
+          <button onClick={showCommentHandler}>Add Comment +</button>
         </div>
       )}
 

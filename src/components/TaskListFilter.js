@@ -7,30 +7,28 @@ const TaskListFilter = props => {
   const [showFiltersMobile, setShowFiltersMobile] = useState('');
   const isMobileView = useMobile();
   const [dropdown, setDropdown] = useState({
-    sort: false,
+    time: false,
     progress: false,
     priority: false,
     view: false,
   });
 
   const clickFilterHandler = e => {
-    const type = e.target.parentElement.id;
+    const type = e.target.closest('ul').id;
     const value = e.target.dataset.value;
     const name = e.target.textContent;
     props.onFilterChange(type, value, name);
+    closeListHandler(type);
   };
 
-  const toggleListHandler = e => {
-    const type = e.target.closest('div').dataset.filter;
-
+  const toggleListHandler = type => {
     setDropdown(prevState => ({
       ...prevState,
       [type]: !prevState[type],
     }));
   };
 
-  const closeListHandler = e => {
-    const type = e.target.closest('div').dataset.filter;
+  const closeListHandler = type => {
     setDropdown(prevState => ({
       ...prevState,
       [type]: false,
@@ -56,98 +54,95 @@ const TaskListFilter = props => {
       >
         <div className={classes.sort}>
           <label>Sort:</label>
-          <div
-            className={`${classes.filterchoice} ${
-              dropdown.sort && classes.selected
-            }`}
-            onClick={toggleListHandler}
-            onMouseLeave={closeListHandler}
-            data-filter="sort"
-          >
-            <span>{filters.time.name}</span>
-            {dropdown.sort && (
+          <div className={classes.filterwrapper}>
+            <button
+              className={`${classes.filterchoice} ${
+                dropdown.time && classes.selected
+              }`}
+              onClick={() => toggleListHandler('time')}
+              data-filter="time"
+            ><span>{filters.time.name}</span></button>
+            {dropdown.time && (
               <ul
                 className={classes.filterlist}
-                id="time"
-                onClick={clickFilterHandler}
+                id="time" 
+                /*onClick={clickFilterHandler}*/
+                onMouseLeave={() => closeListHandler('time')}
               >
-                <li data-value="new">Newest</li>
-                <li data-value="update">Last Updated</li>
-                <li data-value="dueDate">Due Date</li>
-                <li data-value="old">Oldest</li>
+                <li><button type="button" data-value="new" onClick={clickFilterHandler}>Newest</button></li>
+                <li><button type="button" data-value="update" onClick={clickFilterHandler}>Last Updated</button></li>
+                <li><button type="button" data-value="dueDate" onClick={clickFilterHandler}>Due Date</button></li>
+                <li><button type="button" data-value="old" onClick={clickFilterHandler}>Oldest</button></li>
               </ul>
             )}
           </div>
         </div>
         <div className={classes.sort}>
           <label>Progress:</label>
-          <div
-            className={`${classes.filterchoice} ${
-              dropdown.progress && classes.selected
-            }`}
-            onClick={toggleListHandler}
-            onMouseLeave={closeListHandler}
-            data-filter="progress"
-          >
-            <span>{filters.progress.name}</span>
+          <div className={classes.filterwrapper}>
+            <button
+              className={`${classes.filterchoice} ${dropdown.progress && classes.selected}`}
+              onClick={() => toggleListHandler('progress')}
+              data-filter="progress"
+            >
+              <span>{filters.progress.name}</span>
+            </button>
             {dropdown.progress && (
               <ul
                 className={classes.filterlist}
                 id="progress"
-                onClick={clickFilterHandler}
+                onMouseLeave={() => closeListHandler('progress')}
               >
-                <li data-value="all">All Tasks</li>
-                <li data-value="new">Not Started</li>
-                <li data-value="inprogress">In Progress</li>
-                <li data-value="completed">Completed</li>
+                <li><button type="button" data-value="all" onClick={clickFilterHandler}>All Tasks</button></li>
+                <li><button type="button" data-value="new" onClick={clickFilterHandler}>Not Started</button></li>
+                <li><button type="button" data-value="inprogress" onClick={clickFilterHandler}>In Progress</button></li>
+                <li><button type="button" data-value="completed" onClick={clickFilterHandler}>Completed</button></li>
               </ul>
             )}
           </div>
         </div>
         <div className={classes.sort}>
           <label>Priority:</label>
-          <div
-            className={`${classes.filterchoice} ${
-              dropdown.priority && classes.selected
-            }`}
-            onClick={toggleListHandler}
-            onMouseLeave={closeListHandler}
-            data-filter="priority"
-          >
-            <span>{filters.priority.name}</span>
+          <div className={classes.filterwrapper}>
+            <button
+              className={`${classes.filterchoice} ${dropdown.priority && classes.selected}`}
+              onClick={() => toggleListHandler('priority')}
+              data-filter="priority"
+            >
+              <span>{filters.priority.name}</span>
+            </button>
             {dropdown.priority && (
               <ul
                 className={classes.filterlist}
                 id="priority"
-                onClick={clickFilterHandler}
+                onMouseLeave={() => closeListHandler('priority')}
               >
-                <li data-value="all">Any Priority</li>
-                <li data-value="high">High</li>
-                <li data-value="medium">Medium</li>
-                <li data-value="low">Low</li>
+                <li><button type="button" data-value="all" onClick={clickFilterHandler}>Any Priority</button></li>
+                <li><button type="button" data-value="high" onClick={clickFilterHandler}>High</button></li>
+                <li><button type="button" data-value="medium" onClick={clickFilterHandler}>Medium</button></li>
+                <li><button type="button" data-value="low" onClick={clickFilterHandler}>Low</button></li>
               </ul>
             )}
           </div>
         </div>
         <div className={classes.sort}>
           <label>View:</label>
-          <div
-            className={`${classes.filterchoice} ${
-              dropdown.view && classes.selected
-            }`}
-            onClick={toggleListHandler}
-            onMouseLeave={closeListHandler}
-            data-filter="view"
-          >
-            <span>{filters.view.name}</span>
+          <div className={classes.filterwrapper}>
+            <button
+              className={`${classes.filterchoice} ${dropdown.view && classes.selected}`}
+              onClick={() => toggleListHandler('view')}
+              data-filter="view"
+            >
+              <span>{filters.view.name}</span>
+            </button>
             {dropdown.view && (
               <ul
                 className={classes.filterlist}
                 id="view"
-                onClick={clickFilterHandler}
+                onMouseLeave={() => closeListHandler('view')}
               >
-                <li data-value="expand">Expanded</li>
-                <li data-value="minimize">Minimized</li>
+                <li><button type="button" data-value="expand" onClick={clickFilterHandler}>Expanded</button></li>
+                <li><button type="button" data-value="minimize" onClick={clickFilterHandler}>Minimized</button></li>
               </ul>
             )}
           </div>
